@@ -1,1 +1,1 @@
-# eduscape-pa
+# EduScape-PA
