@@ -6,7 +6,7 @@ import GridWithPercentileCircles from './GirdWithPercentiles';
 import { render } from 'react-dom';
 
 
-interface SchoolInfo {
+export interface SchoolInfo {
     name: string;
     graduationRate: number;
     dropoutRate: number;

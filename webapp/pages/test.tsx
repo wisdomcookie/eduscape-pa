@@ -2,6 +2,7 @@
 import { PieChart } from 'react-minimal-pie-chart';
 import PieChartCard from './Components/PieChartCard';
 import SchoolCard from './Components/SchoolCard'
+import SchoolListComponent from './Components/ComparisonScreen';
 
 
 
@@ -24,13 +25,8 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div style = {chartContainerStyle}>
-      <PieChart
-                  data={[
-                    { title: 'Dropout Rate', value: exampleSchoolInfo.dropoutRate, color: '#FFCE56' },
-                    { title: 'Remaining', value: 100 - exampleSchoolInfo.dropoutRate, color: '#f0f0f0' },
-                  ]}
-                />
+    <div>
+      <SchoolListComponent></SchoolListComponent>
     </div>
   );
 };

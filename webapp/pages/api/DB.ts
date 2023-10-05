@@ -11,6 +11,48 @@ export interface SchoolInfo {
   avgTeacherEducationLevel: string;
   percentile: number; // Use strings for education level codes
 }
+const sampleSchoolData = [
+  {
+    name: "Sample School 1",
+    graduationRate: 90,
+    dropoutRate: 3,
+    spendingPerStudent: 12000,
+    facultyToStudentRatio: 12,
+    avgTeacherEducationLevel: "5",
+    percentile: 85,
+    overall_rating: 9,
+  },
+  {
+    name: "Sample School 2",
+    graduationRate: 80,
+    dropoutRate: 6,
+    spendingPerStudent: 9000,
+    facultyToStudentRatio: 8,
+    avgTeacherEducationLevel: "3",
+    percentile: 65,
+    overall_rating: 7,
+  },
+  {
+    name: "Sample School 3",
+    graduationRate: 85,
+    dropoutRate: 5,
+    spendingPerStudent: 10000,
+    facultyToStudentRatio: 10,
+    avgTeacherEducationLevel: "4",
+    percentile: 75,
+    overall_rating: 8,
+  },
+  {
+    name: "Sample School 4",
+    graduationRate: 95,
+    dropoutRate: 2,
+    spendingPerStudent: 15000,
+    facultyToStudentRatio: 15,
+    avgTeacherEducationLevel: "6",
+    percentile: 95,
+    overall_rating: 10,
+  },
+];
 const schoolInfo: SchoolInfo[] = [
     {
       name: 'School A',
@@ -54,7 +96,7 @@ const schoolInfo: SchoolInfo[] = [
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   const { schoolName } = req.query;
-  const school = schoolInfo.find(school => school.name === schoolName as string);
+  const school = sampleSchoolData.find(school => school.name === schoolName as string);
 
   if (!school) {
     res.status(404).json({ error: 'School not found' });
