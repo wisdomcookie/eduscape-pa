@@ -16,7 +16,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
       <SchoolCard schoolInfo={exampleSchoolInfo} />
       <SchoolCard schoolInfo={exampleSchoolInfo} />
     </div>

@@ -128,7 +128,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
 
 <div style = {{paddingTop: '10px'}}>
 <button onClick={handleShowStats} style={{ backgroundColor: '#ECECEC', border: 'none', padding: '10px 20px', cursor: 'pointer', position: 'relative', borderRadius: '15px 15px 0 0' }}>
-  <p style = {{paddingBottom: '12px'}}> {showStats? "Show Stats" : "Hide Stats"}</p>
+  <p style = {{paddingBottom: '12px'}}> {showStats? "Hide Stats" : "Show Stats"}</p>
   <div style={{ position: 'absolute', bottom: '5px', left: '50%', transform: 'translateX(-50%)', width: '30px', height: '1px', background: '#000' }}></div>
   <div style={{ position: 'absolute', bottom: '12px', left: '50%', transform: 'translateX(-50%)', width: '30px', height: '1px', background: '#000' }}></div>
   <div style={{ position: 'absolute', bottom: '19px', left: '50%', transform: 'translateX(-50%)', width: '30px', height: '1px', background: '#000' }}></div>
