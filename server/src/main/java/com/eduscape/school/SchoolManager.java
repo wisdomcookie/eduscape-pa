@@ -1,7 +1,5 @@
 package com.eduscape.school;
 
-import com.eduscape.mysql.PlayerData;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,12 +9,12 @@ import java.util.Map;
 
 public class SchoolManager {
 
-    private final PlayerData database;
+    //private final PlayerData database;
     private final Map<Integer, District> districts;
     private final Map<Integer, School> schools;
 
-    public SchoolManager(PlayerData database) {
-        this.database = database;
+    public SchoolManager() {
+        //this.database = database;
 
         districts = new HashMap<>();
         schools = new HashMap<>();
