@@ -28,7 +28,7 @@ public class SchoolManager {
     @RequestMapping("/all")
     private ResponseEntity<String> generate() {
         try {
-            File file = new File("data", "district.csv");
+            File file = new File("src/main/resources/data", "district.csv");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
@@ -48,7 +48,7 @@ public class SchoolManager {
         }
 
         try {
-            File file = new File("data", "school1.csv");
+            File file = new File("src/main/resources/data", "school1.csv");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
@@ -80,7 +80,7 @@ public class SchoolManager {
         }
 
         try {
-            File file = new File("data", "school.csv");
+            File file = new File("src/main/resources/data", "school.csv");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
