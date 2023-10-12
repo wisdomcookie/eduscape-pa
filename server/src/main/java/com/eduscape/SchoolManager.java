@@ -1,28 +1,32 @@
-package com.eduscape.school;
+package com.eduscape;
+
+import com.eduscape.district.District;
+import com.eduscape.district.DistrictRepository;
+import com.eduscape.school.School;
+import com.eduscape.school.SchoolRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
+@Controller
+@RequestMapping(path="/insert")
 public class SchoolManager {
 
-    //private final PlayerData database;
-    private final Map<Integer, District> districts;
-    private final Map<Integer, School> schools;
+    @Autowired
+    private DistrictRepository districtRepository;
 
-    public SchoolManager() {
-        //this.database = database;
+    @Autowired
+    private SchoolRepository schoolRepository;
 
-        districts = new HashMap<>();
-        schools = new HashMap<>();
-
-        generate();
-    }
-
-    private void generate() {
+    @RequestMapping("/all")
+    private ResponseEntity<String> generate() {
         try {
             File file = new File("data", "district.csv");
             FileReader fr = new FileReader(file);
@@ -34,7 +38,9 @@ public class SchoolManager {
                 arr = line.split(",");
 
                 int aun = Integer.parseInt(arr[0]);
-                districts.put(aun, new District(aun, arr[1], arr[2]));
+                District district = new District(aun, arr[1], arr[2]);
+
+                districtRepository.save(district);
             }
             br.close();
         } catch(IOException ioe) {
@@ -53,14 +59,25 @@ public class SchoolManager {
 
                 int aun = Integer.parseInt(arr[0]);
                 int id = Integer.parseInt(arr[1]);
-                schools.put(id, new School(id, aun, arr[2]));
+
+                School school = new School(
+                        id,
+                        aun,
+                        arr[2],
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0);
+
+                schoolRepository.save(school);
             }
             br.close();
         } catch(IOException ioe) {
             ioe.printStackTrace();
         }
-
-        System.out.println("Schools size: " + schools.size());
 
         try {
             File file = new File("data", "school.csv");
@@ -74,15 +91,27 @@ public class SchoolManager {
 
                 int aun = Integer.parseInt(arr[0]);
                 int id = Integer.parseInt(arr[1]);
-                schools.put(id, new School(id, aun, arr[2]));
+
+                School school = new School(
+                        id,
+                        aun,
+                        arr[2],
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0);
+
+                schoolRepository.save(school);
             }
             br.close();
         } catch(IOException ioe) {
             ioe.printStackTrace();
         }
 
-        System.out.println("Districts size: " + districts.size());
-        System.out.println("Schools size: " + schools.size());
+        return new ResponseEntity<>("Done inserting\n", HttpStatus.OK);
     }
 
 }
