@@ -18,7 +18,7 @@ Similarly, you can create a maven configuration `sprint-boot:run` to have the ID
 
 ### Development Commands
 At the moment, there are simple commands to insert and read data. You can use the `curl` command or your browser to ping your local instance
-- `localhost:8080/insert/all` - Inserts the data. This may take a while and only needs to run once to initialize the test data
+- `localhost:8080/insert/all` - Inserts the data. This may take a while (5-15 seconds) and only needs to run once to initialize the data
 - `localhost:8080/schools/all` - Gets all schools as JSON
 - `localhost:8080/schools/allNames` - Gets all school names
 - `localhost:8080/districts/all` - Gets all districts as JSON

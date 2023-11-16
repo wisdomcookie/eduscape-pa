@@ -16,21 +16,8 @@ public class DistrictController {
     @Autowired
     private DistrictRepository districtRepository;
 
-    @PostMapping(path="/add")
-    public @ResponseBody ResponseEntity<String> add(
-            @RequestParam int aun,
-            @RequestParam String name,
-            @RequestParam String county) {
-
-        District district = new District(
-                aun,
-                name,
-                county
-        );
-        districtRepository.save(district);
-
-        return new ResponseEntity<>("Saved district\n", HttpStatus.OK);
-    }
+    @Autowired
+    private DistrictDataRepository districtDataRepository;
 
     @GetMapping(path="/all")
     public @ResponseBody ResponseEntity<Iterable<District>> getAll() {

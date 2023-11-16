@@ -1,5 +1,6 @@
 package com.eduscape.school;
 
+import com.eduscape.keystone.KeystoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,35 +17,11 @@ public class SchoolController {
     @Autowired
     private SchoolRepository schoolRepository;
 
-    @PostMapping(path="/add")
-    public @ResponseBody ResponseEntity<String> add(
-            @RequestParam int id,
-            @RequestParam int aun,
-            @RequestParam String name,
-            @RequestParam double graduationRate,
-            @RequestParam double dropoutRate,
-            @RequestParam double spendingPerStudent,
-            @RequestParam double facultyToStudentRatio,
-            @RequestParam double averageTeacherEducationLevel,
-            @RequestParam int percentile,
-            @RequestParam int overall_rating) {
+    @Autowired
+    private SchoolDataRepository schoolDataRepository;
 
-        School school = new School(
-                id,
-                aun,
-                name,
-                graduationRate,
-                dropoutRate,
-                spendingPerStudent,
-                facultyToStudentRatio,
-                averageTeacherEducationLevel,
-                percentile,
-                overall_rating
-        );
-        schoolRepository.save(school);
-
-        return new ResponseEntity<>("Saved school\n", HttpStatus.OK);
-    }
+    @Autowired
+    private KeystoneRepository keystoneRepository;
 
     @GetMapping(path="/all")
     public @ResponseBody ResponseEntity<Iterable<School>> getAll() {

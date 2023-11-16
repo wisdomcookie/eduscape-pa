@@ -1,30 +1,37 @@
 package com.eduscape.district;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "district")
 @NoArgsConstructor
 public class District {
 
     @Id
-    private int aun;
+    @Column(name = "aun")
+    private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "county")
     private String county;
 
-    public District(int aun, String name, String county) {
-        this.aun = aun;
+    public District(int id, String name, String county) {
+        this.id = id;
         this.name = name;
         this.county = county;
     }
 
-    public int getAun() {
-        return aun;
+    public int getId() {
+        return id;
     }
 
-    public void setAun(int aun) {
-        this.aun = aun;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

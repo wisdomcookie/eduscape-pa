@@ -1,0 +1,11 @@
+school: school_number,aun,name
+
+school_data: school_number,year,initial_enrollment,dropout_count,graduate_count,college_bound,total_enrollment,low_income_enrollment
+
+keystone: school_number,year,subject,group,total,percent_advanced,percent_proficient,percent_basic,percent_below_basic
+
+keystone_results: year,subject,group,total,percent_advanced,percent_proficient,percent_basic,percent_below_basic
+
+district: aun,name,county
+
+district_data: aun,year,expenditures,revenue,professional_personnel,average_experience,average_salary,average_degree
