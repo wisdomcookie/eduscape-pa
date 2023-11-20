@@ -15,6 +15,8 @@ Another problem you may encounter is your IDE not recognizing the Java or Maven 
 ### Running the Project
 First navigate to the terminal and enter the project's `/server` directory.
 
+Set up the ssh tunnel to the server with `ssh -L 3307:localhost:3306 Admin@139.147.9.167 -N`
+
 You can run the application by using `./mvnw spring-boot:run`.
 Alternatively, you can build the JAR file with `./mvnw clean package`
 and then run the JAR file, as follows: `java -jar target/{project_name}.jar`
