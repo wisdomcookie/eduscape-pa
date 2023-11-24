@@ -7,7 +7,7 @@ import Header from './Components/Header';
 
 
 
-const Home: React.FC = () => {
+const Top25: React.FC = () => {
   const exampleSchoolInfo = {
     name: "Example School",
     graduationRate: 85,
@@ -21,12 +21,12 @@ const Home: React.FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="Home" style={{backgroundColor: '#ffe9dd'}}>
-        <Header></Header>
+      <div className="Home">
+      <  Header></Header>
         <RankedSchoolList />
       </div>
     </DndProvider>
   );
 };
 
-export default Home;
+export default Top25;

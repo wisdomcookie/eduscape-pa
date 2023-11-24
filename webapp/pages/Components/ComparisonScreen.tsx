@@ -63,7 +63,7 @@ const SchoolListComponent: React.FC = () => {
   };
 
   return (
-    <div style={{ background: '#ccc', padding: '10px',height: '100vh', }}>
+    <div style={{ background: '#ccc', padding: '10px',height: '100vh', backgroundColor: '#F2E3DB' }}>
       <div style={{ display: 'flex' }}>
         <input
           type="text"

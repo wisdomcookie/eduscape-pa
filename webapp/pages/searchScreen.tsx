@@ -3,11 +3,12 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import RankedSchoolList from './Components/RankedSchoolList';
 import SchoolCard from './Components/SchoolCard'
+import SchoolListComponent from './Components/ComparisonScreen';
 import Header from './Components/Header';
 
 
 
-const Home: React.FC = () => {
+const SearchScreen: React.FC = () => {
   const exampleSchoolInfo = {
     name: "Example School",
     graduationRate: 85,
@@ -20,13 +21,11 @@ const Home: React.FC = () => {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="Home" style={{backgroundColor: '#ffe9dd'}}>
+    <div>
         <Header></Header>
-        <RankedSchoolList />
-      </div>
-    </DndProvider>
+      <SchoolListComponent></SchoolListComponent>
+    </div>
   );
 };
 
-export default Home;
+export default SearchScreen;

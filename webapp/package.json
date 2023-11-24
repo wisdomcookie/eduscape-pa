@@ -13,11 +13,16 @@
     "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.0.18",
     "@mui/material": "^5.14.11",
+    "@types/react-dnd": "^3.0.2",
+    "@types/react-dnd-html5-backend": "^3.0.2",
     "next": "latest",
     "react": "latest",
     "react-chartjs-2": "^5.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "latest",
     "react-minimal-pie-chart": "^8.4.0",
+    "react-router-dom": "^6.20.0",
     "recharts": "^2.8.0"
   },
   "devDependencies": {
