@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard component and SchoolInfo type
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 const buttonStyle = {
@@ -33,9 +33,11 @@ const SchoolListComponent: React.FC = () => {
     collegeBound: true,
     lowIncome: true,
   });
+  const [schoolNames, setSchoolNames] = useState<string[]>([]);
 
   const handleSearch = async () => {
     try {
+      
       const response = await fetch(`/api/DB?schoolName=${searchQuery}`);
       if (response.ok) {
         const data = await response.json();
@@ -66,6 +68,33 @@ const SchoolListComponent: React.FC = () => {
     }));
   };
 
+  
+  useEffect(() => {
+    const fetchSchoolNames = async () => {
+      try {
+        console.log('Fetching school names...');
+        const response = await fetch(`/api/getSchoolNames`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data)
+          setSchoolNames(data);
+        }
+      } catch (error) {
+        console.error('Error fetching school names:', error);
+      }
+    };
+
+    fetchSchoolNames();
+    
+  }, []);
+
+  useEffect(() => {
+    console.log( "Schol names " + schoolNames)
+    
+  },schoolNames);
+
+  
+  
   return (
     <div style={{ padding: '10px',height: '100vh', backgroundColor: '#F2E3DB' }}>
       <Typography variant="h2" style={{ marginBottom: '16px',  }}>Search and Compare Schools</Typography>
@@ -77,9 +106,16 @@ const SchoolListComponent: React.FC = () => {
           onKeyPress={handleKeyPress}
           placeholder="Search for a school"
           style={{ flex: 1, padding: '8px' }}
+          list="schoolNames"
         />
         <button onClick={handleSearch} style={{  ...buttonStyle,marginLeft: '8px' }}>Search</button>
       </div>
+      <datalist id="schoolNames">
+        {schoolNames.map((name, index) => (
+          <option key={index} value={name} />
+        ))}
+      </datalist>
+
 
       {error && <div>{error}</div>}
 

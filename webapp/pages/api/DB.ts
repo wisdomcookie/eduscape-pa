@@ -230,6 +230,10 @@ const getBottom25Schools = (req: NextApiRequest, res: NextApiResponse) => {
     res.json(topSchools);
   }
 };
+const getAllSchoolNames = (req: NextApiRequest, res: NextApiResponse) => {
+  const schoolNames = sampleSchoolData.map((school) => school.name);
+  res.json(schoolNames);
+};
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
@@ -237,11 +241,25 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
       getTop25Schools(req, res);
     } else if (req.query.bottom25) {
       getBottom25Schools(req, res);
+    }
+   else if (req.query.allNames) {
+      getAllSchoolNames(req, res);
     } else {
       handleGetSchoolInfo(req, res);
     }
   } else if (req.method === 'POST') {
-    handleSortSchools(req, res);
+    if (req.query.top25) {
+      getTop25Schools(req, res);
+    } else if (req.query.bottom25) {
+      getBottom25Schools(req, res);
+    }
+   else if (req.query.allNames) {
+      getAllSchoolNames(req, res);
+    } else {
+      handleSortSchools(req, res);
+    }
+
+    
   } else {
     res.status(405).json({ error: 'Method not allowed' });
   }

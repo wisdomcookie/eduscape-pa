@@ -49,7 +49,7 @@ const Bottom25SchoolList: React.FC = () => {
 
   const fetchSchoolData = async () => {
     try {
-        console.log('fetchSchoolData called');
+        
       const response = await fetch('/api/DB?bottom25=true', {
         method: 'POST',
         headers: {
