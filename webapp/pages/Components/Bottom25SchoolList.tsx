@@ -22,7 +22,7 @@ interface Options {
   avgTeacherEducationLevel: boolean;
 }
 
-const RankedSchoolList: React.FC = () => {
+const Bottom25SchoolList: React.FC = () => {
   const [sortedItems, setSortedItems] = useState([
         'name',
         'graduationRate',
@@ -50,7 +50,7 @@ const RankedSchoolList: React.FC = () => {
   const fetchSchoolData = async () => {
     try {
         console.log('fetchSchoolData called');
-      const response = await fetch('/api/DB?top25=true', {
+      const response = await fetch('/api/DB?bottom25=true', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,12 +72,11 @@ const RankedSchoolList: React.FC = () => {
   fetchSchoolData()
 
   return (
-    <div style={{ display: 'flex', height: '100%', backgroundColor: '#F2E3DB', paddingBottom: '200px' }}>
+    <div style={{ display: 'flex', height: '100vh', backgroundColor: '#F2E3DB', paddingBottom: '200px',overflow: 'auto' }}>
 
       <div style={{ padding: '10px', flex: 3, textAlign: 'center' }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400&display=swap" />
-      <Typography variant="h4" style={{ fontFamily: 'Oleo Script, cursive',marginBottom: '16px' }}>Ranking Criteria</Typography>
-      <Typography variant="h2" style={{  fontFamily: 'Oleo Script, cursive',marginBottom: '16px',  }}>Top 25</Typography>
+      <Typography variant="h2" style={{ fontFamily: 'Oleo Script, cursive',marginBottom: '16px',  }}>Bottom 25</Typography>
         <div style={{ marginTop: '20px' }}>
           <FormControlLabel
             control={
@@ -124,11 +123,11 @@ const RankedSchoolList: React.FC = () => {
       </div>
 
       {/* Right side */}
-      <div style={{ flex: 1, padding: '10px' }}>
+      <div style={{ flex: 1, padding: '10px', position: 'sticky', top: '0'  }}>
         <SortableListContainer sortedItems={sortedItems} setSortedItems={setSortedItems} handleClicked = {fetchSchoolData} />
       </div>
     </div>
   );
 };
 
-export default RankedSchoolList;
+export default Bottom25SchoolList;

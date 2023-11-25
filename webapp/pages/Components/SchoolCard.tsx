@@ -63,6 +63,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
         gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
         gap: '20px',
         justifyContent: 'center',
+        
       };
     
       const circleStyle: React.CSSProperties = {

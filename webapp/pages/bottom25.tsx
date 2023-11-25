@@ -4,6 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import RankedSchoolList from './Components/RankedSchoolList';
 import SchoolCard from './Components/SchoolCard'
 import Header from './Components/Header';
+import Bottom25SchoolList from './Components/Bottom25SchoolList';
 
 
 
@@ -23,7 +24,7 @@ const Top25: React.FC = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="Home" style={{backgroundColor: '#ffe9dd'}}>
         <Header></Header>
-        <RankedSchoolList />
+        <Bottom25SchoolList />
       </div>
     </DndProvider>
   );

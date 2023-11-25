@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard component and SchoolInfo type
-import { Checkbox, FormControlLabel } from '@mui/material';
+import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 const buttonStyle = {
     padding: '10px 20px',
     borderRadius: '10px',
@@ -17,6 +17,8 @@ const buttonStyle = {
     expendituresPerStudent: boolean;
     studentToFacultyRatio: boolean;
     avgTeacherEducationLevel: boolean;
+    collegeBound: boolean;
+    lowIncome: boolean;
   }
 
 const SchoolListComponent: React.FC = () => {
@@ -28,6 +30,8 @@ const SchoolListComponent: React.FC = () => {
     expendituresPerStudent: true,
     studentToFacultyRatio: true,
     avgTeacherEducationLevel: true,
+    collegeBound: true,
+    lowIncome: true,
   });
 
   const handleSearch = async () => {
@@ -63,7 +67,8 @@ const SchoolListComponent: React.FC = () => {
   };
 
   return (
-    <div style={{ background: '#ccc', padding: '10px',height: '100vh', backgroundColor: '#F2E3DB' }}>
+    <div style={{ padding: '10px',height: '100vh', backgroundColor: '#F2E3DB' }}>
+      <Typography variant="h2" style={{ marginBottom: '16px',  }}>Search and Compare Schools</Typography>
       <div style={{ display: 'flex' }}>
         <input
           type="text"
@@ -115,6 +120,25 @@ const SchoolListComponent: React.FC = () => {
           }
           label="Avg Teacher Education Level"
         />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.collegeBound}
+              onChange={() => handleOptionChange('collegeBound')}
+            />
+          }
+          label="Percent College Bound"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.lowIncome}
+              onChange={() => handleOptionChange('lowIncome')}
+            />
+          }
+          label="Percent Low Income"
+        />
+        
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>

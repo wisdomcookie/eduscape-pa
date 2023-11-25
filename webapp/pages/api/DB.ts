@@ -159,8 +159,8 @@ const sampleSchoolData: SchoolInfo[] = [
 ];
 
 const sortSchools = (sortedItems: string[], schools: SchoolInfo[]) => {
-  // Your sorting logic here...
-  return schools; // Placeholder, implement your sorting logic
+  
+  return schools; 
 };
 
 export const getSchoolByName = (name: string): SchoolInfo | undefined => {
@@ -177,6 +177,7 @@ const handleGetSchoolInfo = (req: NextApiRequest, res: NextApiResponse) => {
     res.json(school);
   }
 };
+
 
 const handleSortSchools = (req: NextApiRequest, res: NextApiResponse) => {
   const { sortedItems } = req.body;
@@ -195,9 +196,50 @@ const handleSortSchools = (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
+const getTop25Schools = (req: NextApiRequest, res: NextApiResponse) => {
+  const { sortedItems } = req.body;
+
+  if (!sortedItems || !Array.isArray(sortedItems)) {
+    res.status(400).json({ error: 'Invalid input' });
+    return;
+  }
+
+  const topSchools = sortSchools(sortedItems, sampleSchoolData.slice());
+
+  if (topSchools.length > 25) {
+    res.json(topSchools.slice(0, 25));
+  } else {
+    res.json(topSchools);
+  }
+};
+
+
+const getBottom25Schools = (req: NextApiRequest, res: NextApiResponse) => {
+  const { sortedItems } = req.body;
+
+  if (!sortedItems || !Array.isArray(sortedItems)) {
+    res.status(400).json({ error: 'Invalid input' });
+    return;
+  }
+
+  const topSchools = sortSchools(sortedItems, sampleSchoolData.slice());
+
+  if (topSchools.length > 25) {
+    res.json(topSchools.slice(0, 25));
+  } else {
+    res.json(topSchools);
+  }
+};
+
 export default (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
-    handleGetSchoolInfo(req, res);
+    if (req.query.top25) {
+      getTop25Schools(req, res);
+    } else if (req.query.bottom25) {
+      getBottom25Schools(req, res);
+    } else {
+      handleGetSchoolInfo(req, res);
+    }
   } else if (req.method === 'POST') {
     handleSortSchools(req, res);
   } else {

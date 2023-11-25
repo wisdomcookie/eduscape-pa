@@ -29,7 +29,9 @@ const SortableList: React.FC<SortableListProps> = ({ sortedItems,setSortedItems,
 
   return (
     <div>
-      <Typography variant="h4" style={{ marginBottom: '16px' }}>Ranking Criteria</Typography>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400&display=swap" />
+      <Typography variant="h4" style={{ fontFamily: 'Oleo Script, cursive',marginBottom: '16px' }}>Ranking Criteria</Typography>
       <List>
         {sortedItems.map((item, index) => (
           <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
@@ -61,7 +63,7 @@ const SortableList: React.FC<SortableListProps> = ({ sortedItems,setSortedItems,
         variant="contained" 
         color="primary" 
         onClick={handleClicked} 
-        style={{ backgroundColor: '#1976D2' }} // Set the background color to blue
+        style={{ backgroundColor: '#96D691' }} // Set the background color to blue
       >
         Submit Changes
       </Button>
