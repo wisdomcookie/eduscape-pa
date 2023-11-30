@@ -11,6 +11,7 @@ const buttonStyle = {
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
     marginRight: '8px',
   };
+  
 
   interface Options {
     graduationRate: boolean;
@@ -73,11 +74,18 @@ const SchoolListComponent: React.FC = () => {
     const fetchSchoolNames = async () => {
       try {
         console.log('Fetching school names...');
-        const response = await fetch(`/api/getSchoolNames`);
+        const response = await fetch(`http://localhost:8080/schools/allNames`, {
+      mode: 'no-cors',
+    });
+        console.log(response)
         if (response.ok) {
           const data = await response.json();
           console.log(data)
           setSchoolNames(data);
+        }
+        else{
+          console.log(response.headers)
+
         }
       } catch (error) {
         console.error('Error fetching school names:', error);

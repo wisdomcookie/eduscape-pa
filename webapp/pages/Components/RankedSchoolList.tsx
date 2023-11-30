@@ -76,7 +76,6 @@ const RankedSchoolList: React.FC = () => {
 
       <div style={{ padding: '10px', flex: 3, textAlign: 'center' }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400&display=swap" />
-      <Typography variant="h4" style={{ fontFamily: 'Oleo Script, cursive',marginBottom: '16px' }}>Ranking Criteria</Typography>
       <Typography variant="h2" style={{  fontFamily: 'Oleo Script, cursive',marginBottom: '16px',  }}>Top 25</Typography>
         <div style={{ marginTop: '20px' }}>
           <FormControlLabel
