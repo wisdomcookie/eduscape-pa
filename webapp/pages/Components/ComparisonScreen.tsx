@@ -74,9 +74,7 @@ const SchoolListComponent: React.FC = () => {
     const fetchSchoolNames = async () => {
       try {
         console.log('Fetching school names...');
-        const response = await fetch(`http://localhost:8080/schools/allNames`, {
-      mode: 'no-cors',
-    });
+        const response = await fetch(`http://localhost:8080/schools/allNames`);
         console.log(response)
         if (response.ok) {
           const data = await response.json();
