@@ -8,8 +8,6 @@ import com.eduscape.keystone.Keystone;
 import com.eduscape.keystone.KeystoneRepository;
 import com.eduscape.keystone.KeystoneResults;
 import com.eduscape.keystone.KeystoneResultsRepository;
-import com.eduscape.keystone.identifiers.KeystoneGroup;
-import com.eduscape.keystone.identifiers.KeystoneSubject;
 import com.eduscape.school.School;
 import com.eduscape.school.SchoolData;
 import com.eduscape.school.SchoolDataRepository;
