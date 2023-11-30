@@ -7,8 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping(path="/schools")
@@ -32,7 +31,6 @@ public class SchoolController {
     public @ResponseBody ResponseEntity<Iterable<String>> getNames() {
         List<String> names = new ArrayList<>();
         for (School s : schoolRepository.findAll()) {
-            schoolRepository.findAll();
             names.add(s.getName());
         }
 
@@ -52,7 +50,11 @@ public class SchoolController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        SchoolDataNormalized schoolDataNormalized = new SchoolDataNormalized(
+        return new ResponseEntity<>(getData(school), HttpStatus.OK);
+    }
+
+    private SchoolDataNormalized getData(School school) {
+        return new SchoolDataNormalized(
                 school.getName(),
                 Math.random(),
                 0,
@@ -65,7 +67,37 @@ public class SchoolController {
                 Math.random(),
                 0
         );
+    }
 
-        return new ResponseEntity<>(schoolDataNormalized, HttpStatus.OK);
+    @GetMapping(path="/top25")
+    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTop25(String orderByClause) {
+        List<School> schools = new ArrayList<>();
+        for (School s : schoolRepository.findAll()) {
+            schools.add(s);
+        }
+        schools.sort(Comparator.comparing(School::getName));
+
+        List<SchoolDataNormalized> schoolData = new ArrayList<>();
+        for (int i = 0; i < Math.min(schools.size(), 25); i++) {
+            schoolData.add(getData(schools.get(i)));
+        }
+
+        return new ResponseEntity<>(schoolData, HttpStatus.OK);
+    }
+
+    @GetMapping(path="/bottom25")
+    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getBottom25(String orderByClause) {
+        List<School> schools = new ArrayList<>();
+        for (School s : schoolRepository.findAll()) {
+            schools.add(s);
+        }
+        schools.sort(Comparator.comparing(School::getName));
+
+        List<SchoolDataNormalized> schoolData = new ArrayList<>();
+        for (int i = schools.size()-1; i >= Math.max(schools.size() - 25, 0); i--) {
+            schoolData.add(getData(schools.get(i)));
+        }
+
+        return new ResponseEntity<>(schoolData, HttpStatus.OK);
     }
 }
