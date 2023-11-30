@@ -32,9 +32,40 @@ public class SchoolController {
     public @ResponseBody ResponseEntity<Iterable<String>> getNames() {
         List<String> names = new ArrayList<>();
         for (School s : schoolRepository.findAll()) {
+            schoolRepository.findAll();
             names.add(s.getName());
         }
 
         return new ResponseEntity<>(names, HttpStatus.OK);
+    }
+
+    @GetMapping(path="/rates")
+    public @ResponseBody ResponseEntity<SchoolDataNormalized> getRates(String name) {
+        School school = null;
+        for (School s : schoolRepository.findAll()) {
+            if (s.getName().equals(name)) {
+                school = s;
+                break;
+            }
+        }
+        if (school == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        SchoolDataNormalized schoolDataNormalized = new SchoolDataNormalized(
+                school.getName(),
+                Math.random(),
+                0,
+                Math.random(),
+                0,
+                Math.random(),
+                0,
+                Math.random(),
+                0,
+                Math.random(),
+                0
+        );
+
+        return new ResponseEntity<>(schoolDataNormalized, HttpStatus.OK);
     }
 }
