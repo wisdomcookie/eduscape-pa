@@ -14,7 +14,8 @@ export interface SchoolInfo {
     facultyToStudentRatio: number;
     avgTeacherEducationLevel: string;
     percentile: number;
-    overall_rating: number; // Use strings for education level codes
+    overall_rating: number;
+    college_bound: number; // Use strings for education level codes
   }
 
 interface SchoolCardProps {
