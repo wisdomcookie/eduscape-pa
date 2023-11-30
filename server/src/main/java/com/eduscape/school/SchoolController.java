@@ -37,6 +37,12 @@ public class SchoolController {
         return new ResponseEntity<>(names, HttpStatus.OK);
     }
 
+    @GetMapping(path="/find")
+    public @ResponseBody ResponseEntity<School> find(String name) {
+        Optional<School> school = schoolRepository.findSchoolByName(name);
+        return school.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+    }
+
     @GetMapping(path="/rates")
     public @ResponseBody ResponseEntity<SchoolDataNormalized> getRates(String name) {
         School school = null;
