@@ -154,7 +154,7 @@ public class SchoolController {
             return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         }
         else {
-            Optional<Object> data = schoolDataRepository.getGraduationRate(name);
+            Optional<Object> data = schoolDataRepository.getGraduationRate(name, year);
             return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         }
     }
