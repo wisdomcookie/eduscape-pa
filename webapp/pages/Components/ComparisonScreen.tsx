@@ -39,9 +39,11 @@ const SchoolListComponent: React.FC = () => {
   const handleSearch = async () => {
     try {
       
-      const response = await fetch(`/api/DB?schoolName=${searchQuery}`);
+      const response = await fetch(`http://localhost:8080/schools/rates?name=${searchQuery}`);
+      console.log(response)
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
         setSchoolData(prevData => [...prevData, data]);
         setError(null);
       } else {
