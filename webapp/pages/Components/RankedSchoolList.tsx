@@ -50,13 +50,8 @@ const RankedSchoolList: React.FC = () => {
   const fetchSchoolData = async () => {
     try {
         console.log('fetchSchoolData called');
-      const response = await fetch('/api/DB?top25=true', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ options, sortedItems }), // Include sortedItems in the request
-      });
+      const param = sortedItems.join(',');
+      const response = await fetch("http://localhost:8080/schools/top25?orderByClause=" + param);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');

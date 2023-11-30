@@ -50,12 +50,13 @@ const Bottom25SchoolList: React.FC = () => {
   const fetchSchoolData = async () => {
     try {
         
-      const response = await fetch('/api/DB?bottom25=true', {
+      const param = sortedItems.join(',');
+      const response = await fetch("http://localhost:8080/schools/bottom25?orderByClause=" + param, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ options, sortedItems }), // Include sortedItems in the request
+        body: JSON.stringify({sortedItems }), // Include sortedItems in the request
       });
 
       if (!response.ok) {
