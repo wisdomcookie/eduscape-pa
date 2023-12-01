@@ -12,6 +12,7 @@ const PercentileCircle: React.FC<PercentileCircleProps> = ({ percentile }) => {
   const red = Math.round(lerp(255, 150, percentile / 100));
   const green = Math.round(lerp(183, 214, percentile / 100)); // Adjusted green value to be brighter
   const blue = Math.round(lerp(183, 145, percentile / 100));
+  const formatNumber = (number?: number) => (number !== undefined ? number.toFixed(2) : undefined);
 
   const circleStyle: React.CSSProperties = {
     width: '70px',
@@ -32,7 +33,7 @@ const PercentileCircle: React.FC<PercentileCircleProps> = ({ percentile }) => {
 
   return (
     <div style={circleStyle}>
-      <div style={labelStyle}>{percentile}%</div>
+      <div style={labelStyle}>{formatNumber(percentile)}%</div>
     </div>
   );
 };

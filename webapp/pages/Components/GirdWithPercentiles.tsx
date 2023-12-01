@@ -20,6 +20,7 @@ const GridWithPercentileCircles: React.FC<GridWithPercentileCirclesProps> = ({
   lowIncome,
   facultyDegree,
 }) => {
+  
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
       {graduationRate !== undefined && <TitleWithPercentileCircle title="Graduation Rate" percentile={graduationRate} />}

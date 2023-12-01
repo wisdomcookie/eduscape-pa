@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard component and SchoolInfo type
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import SortableListContainer from './RankedList';
@@ -49,7 +49,7 @@ const RankedSchoolList: React.FC = () => {
 
   const fetchSchoolData = async () => {
     try {
-        console.log('fetchSchoolData called');
+      console.log('fetchSchoolData called');
       const param = sortedItems.join(',');
       const response = await fetch("http://localhost:8080/schools/top25?orderByClause=" + param);
 
@@ -58,13 +58,19 @@ const RankedSchoolList: React.FC = () => {
       }
 
       const data = await response.json();
+      console.log(data)
       setSchoolData(data);
     } catch (error) {
       console.error('Error fetching school data:', error);
     }
   };
 
-  fetchSchoolData()
+
+  useEffect(() => {
+    fetchSchoolData()
+  }, []);
+
+  
 
   return (
     <div style={{ display: 'flex', height: '100%', backgroundColor: '#F2E3DB', paddingBottom: '200px' }}>
@@ -118,8 +124,10 @@ const RankedSchoolList: React.FC = () => {
       </div>
 
       {/* Right side */}
-      <div style={{ flex: 1, padding: '10px' }}>
+      <div style={{ flex: 1, padding: '10px',position: 'sticky' ,  height: '100%' }}>
+        <div >
         <SortableListContainer sortedItems={sortedItems} setSortedItems={setSortedItems} handleClicked = {fetchSchoolData} />
+        </div>
       </div>
     </div>
   );

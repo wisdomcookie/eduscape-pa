@@ -9,10 +9,15 @@ import { render } from 'react-dom';
 export interface SchoolInfo {
     name: string;
     graduationRate: number;
+    graduationRatePercentile: number;
     dropoutRate: number;
+    dropoutRatePercentile: number;
     spendingPerStudent: number;
+    spendingPerPercentile: number;
     facultyToStudentRatio: number;
-    avgTeacherEducationLevel: string;
+    facultyToStudentRatioPercentile: number;
+    avgTeacherEducationLevel: number;
+    avgTeacherEducationLevelPercentile: number;
     percentile: number;
     overall_rating: number;
     college_bound: number; // Use strings for education level codes
@@ -99,10 +104,10 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
       </div >
       <div style={{paddingTop: '30px'}}></div>
       <GridWithPercentileCircles
-  graduationRate={schoolInfo.graduationRate}
-  expendituresPerStudent={schoolInfo.spendingPerStudent}
-  studentToFacultyRatio={schoolInfo.facultyToStudentRatio}
-  avgTeacherEducationLevel={100}
+  graduationRate={schoolInfo.graduationRatePercentile}
+  expendituresPerStudent={schoolInfo.spendingPerPercentile}
+  studentToFacultyRatio={schoolInfo.facultyToStudentRatioPercentile}
+  avgTeacherEducationLevel={schoolInfo.avgTeacherEducationLevel}
   collegeBound= {schoolInfo.college_bound}
   lowIncome={0}
 />
@@ -122,7 +127,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
 
           <OverviewBudget value={schoolInfo.facultyToStudentRatio + ":1"} difference={15} percentile={99.6} title={"Student to Faculty Ratio"} />
 
-          <OverviewBudget value={getEducationLevelText(schoolInfo.avgTeacherEducationLevel)} difference={15} percentile={99.6} title={"Avg Teacher Education Level"} />
+          <OverviewBudget value={getEducationLevelText(schoolInfo.avgTeacherEducationLevel.toString())} difference={15} percentile={99.6} title={"Avg Teacher Education Level"} />
         </div>
       )}
 
