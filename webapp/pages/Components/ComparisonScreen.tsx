@@ -104,7 +104,7 @@ const SchoolListComponent: React.FC = () => {
   
   
   return (
-    <div style={{ padding: '10px',height: '100vh', backgroundColor: '#F2E3DB' }}>
+    <div style={{ padding: '10px',height: 'fit-content', backgroundColor: '#F2E3DB' }}>
       <Typography variant="h2" style={{ marginBottom: '16px',  }}>Search and Compare Schools</Typography>
       <div style={{ display: 'flex' }}>
         <input

@@ -21,7 +21,7 @@ const SearchScreen: React.FC = () => {
   };
 
   return (
-    <div style={{backgroundColor: '#ffe9dd'}}>
+    <div style={{ backgroundColor: '#F2E3DB', height: '100vh'}}>
         <Header></Header>
       <SchoolListComponent></SchoolListComponent>
     </div>

@@ -29,10 +29,6 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
     setShowStats(prevShowStats => !prevShowStats);
     render;
   };
-  const data = [
-    { name: 'Graduated', value: 200 },
-    { name: 'Dropped Out', value: 50 },
-  ];
 
  
     const cardStyle: React.CSSProperties = {
@@ -41,7 +37,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
         paddingTop: '16px',
         paddingLeft: '16px',
         paddingRight: '16px',
-        height: 'auto',
+        height: 'fit-content',
         borderRadius: '8px',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         marginBottom: '20px', // Adjusted maxWidth for two charts side by side
@@ -103,10 +99,12 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
       </div >
       <div style={{paddingTop: '30px'}}></div>
       <GridWithPercentileCircles
-  graduationRate={0}
-  expendituresPerStudent={85}
-  studentToFacultyRatio={65}
+  graduationRate={schoolInfo.graduationRate}
+  expendituresPerStudent={schoolInfo.spendingPerStudent}
+  studentToFacultyRatio={schoolInfo.facultyToStudentRatio}
   avgTeacherEducationLevel={100}
+  collegeBound= {schoolInfo.college_bound}
+  lowIncome={0}
 />
 
 {showStats && (
