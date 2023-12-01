@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "district_data")
 @IdClass(DistrictDataKey.class)
 @NoArgsConstructor
-public class DistrictData {
+public class DistrictData implements Comparable<DistrictData> {
 
     @Id
     @Column(name = "aun")
@@ -37,7 +37,10 @@ public class DistrictData {
     @Column(name = "average_degree")
     private float averageDegree;
 
-    public DistrictData(int districtID, short year, long expenditures, long revenue, int professionalPersonnel, float averageExperience, int averageSalary, float averageDegree) {
+    @Column(name = "enrollment")
+    private int enrollment;
+
+    public DistrictData(int districtID, short year, long expenditures, long revenue, int professionalPersonnel, float averageExperience, int averageSalary, float averageDegree, int enrollment) {
         this.districtID = districtID;
         this.year = year;
         this.expenditures = expenditures;
@@ -46,6 +49,7 @@ public class DistrictData {
         this.averageExperience = averageExperience;
         this.averageSalary = averageSalary;
         this.averageDegree = averageDegree;
+        this.enrollment = enrollment;
     }
 
     public int getDistrictID() {
@@ -110,5 +114,26 @@ public class DistrictData {
 
     public void setAverageDegree(float averageDegree) {
         this.averageDegree = averageDegree;
+    }
+
+    public int getEnrollment() {
+        return enrollment;
+    }
+
+    public void setEnrollment(int enrollment) {
+        this.enrollment = enrollment;
+    }
+
+    public String toCSV() {
+        return districtID + "," + year + "," + expenditures + "," + revenue + "," + professionalPersonnel + "," +
+                averageExperience + "," + averageSalary + "," + averageDegree + "," + enrollment + "\n";
+    }
+
+    @Override
+    public int compareTo(DistrictData o) {
+        if (districtID == o.districtID) {
+            return Integer.compare(year, o.year);
+        }
+        return Integer.compare(districtID, o.districtID);
     }
 }
