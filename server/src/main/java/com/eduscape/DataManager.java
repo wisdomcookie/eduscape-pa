@@ -126,6 +126,7 @@ public class DataManager {
                 float experience = Float.parseFloat(arr[5]);
                 int salary = Integer.parseInt(arr[6]);
                 float degree = Float.parseFloat(arr[7]);
+                int enrollment = Integer.parseInt(arr[8]);
 
                 list.add(new DistrictData(
                         districtId,
@@ -135,7 +136,8 @@ public class DataManager {
                         profPersonnel,
                         experience,
                         salary,
-                        degree
+                        degree,
+                        enrollment
                 ));
             }
             districtDataRepository.saveAll(list);
