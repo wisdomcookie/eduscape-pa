@@ -9,6 +9,8 @@ public class SchoolDataNormalized {
     private final double dropoutRatePercentile;
     private final double percentLowIncome;
     private final double percentLowIncomePercentile;
+    private final double collegeBound;
+    private final double collegeBoundPercentile;
     private final double spendingPerStudent;
     private final double spendingPerPercentile;
     private final double facultyToStudentRatio;
@@ -18,7 +20,7 @@ public class SchoolDataNormalized {
     private final double avgTeacherExperience;
     private final double avgTeacherExperiencePercentile;
 
-    public SchoolDataNormalized(String name, double graduationRate, double graduationRatePercentile, double dropoutRate, double dropoutRatePercentile, double perentLowIncome, double perentLowIncomePercentile, double spendingPerStudent, double spendingPerPercentile, double facultyToStudentRatio, double facultyToStudentRatioPercentile, double avgTeacherExperienceLevel, double avgTeacherExperiencePercentile, double avgTeacherEducationLevel, double avgTeacherEducationLevelPercentile) {
+    public SchoolDataNormalized(String name, double graduationRate, double graduationRatePercentile, double dropoutRate, double dropoutRatePercentile, double perentLowIncome, double perentLowIncomePercentile, double collegeBound, double collegeBoundPercentile, double spendingPerStudent, double spendingPerPercentile, double facultyToStudentRatio, double facultyToStudentRatioPercentile, double avgTeacherExperienceLevel, double avgTeacherExperiencePercentile, double avgTeacherEducationLevel, double avgTeacherEducationLevelPercentile) {
         this.name = name;
         this.graduationRate = graduationRate;
         this.graduationRatePercentile = graduationRatePercentile;
@@ -26,6 +28,8 @@ public class SchoolDataNormalized {
         this.dropoutRatePercentile = dropoutRatePercentile;
         this.percentLowIncome = perentLowIncome;
         this.percentLowIncomePercentile = perentLowIncomePercentile;
+        this.collegeBound = collegeBound;
+        this.collegeBoundPercentile = collegeBoundPercentile;
         this.spendingPerStudent = spendingPerStudent;
         this.spendingPerPercentile = spendingPerPercentile;
         this.facultyToStudentRatio = facultyToStudentRatio;
@@ -58,6 +62,14 @@ public class SchoolDataNormalized {
 
     public double getPercentLowIncomePercentile() {
         return percentLowIncomePercentile;
+    }
+
+    public double getCollegeBound() {
+        return collegeBound;
+    }
+
+    public double getCollegeBoundPercentile() {
+        return collegeBoundPercentile;
     }
 
     public double getDropoutRatePercentile() {
