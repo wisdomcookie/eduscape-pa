@@ -3,6 +3,7 @@ import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard comp
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import SortableListContainer from './RankedList';
 import KeyRow from './keyRow';
+import { Options } from './ComparisonScreen';
  // Import SortableListContainer component
 
 const buttonStyle = {
@@ -16,12 +17,7 @@ const buttonStyle = {
   marginRight: '8px',
 };
 
-interface Options {
-  graduationRate: boolean;
-  expendituresPerStudent: boolean;
-  studentToFacultyRatio: boolean;
-  avgTeacherEducationLevel: boolean;
-}
+
 
 const RankedSchoolList: React.FC = () => {
   const [sortedItems, setSortedItems] = useState([
@@ -35,10 +31,13 @@ const RankedSchoolList: React.FC = () => {
   ]);
   const [schoolData, setSchoolData] = useState<SchoolInfo[]>([]);
   const [options, setOptions] = useState<Options>({
-    graduationRate: true,
-    expendituresPerStudent: true,
-    studentToFacultyRatio: true,
-    avgTeacherEducationLevel: true,
+    dropoutRate: true,
+    percentLowIncome: true,
+    collegeBound: true,
+    spendingPerStudent: true,
+    facultyToStudentRatio: true,
+    avgTeacherExperience: true,
+    avgTeacherDegreeLevel: true,
   });
 
   const handleOptionChange = (option: keyof Options) => {
@@ -79,50 +78,78 @@ const RankedSchoolList: React.FC = () => {
       <div style={{ padding: '10px', flex: 3, textAlign: 'center' }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400&display=swap" />
       <Typography variant="h2" style={{  fontFamily: 'Oleo Script, cursive',marginBottom: '16px',  }}>Top 25</Typography>
-        <div style={{ marginTop: '20px' }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={options.graduationRate}
-                onChange={() => handleOptionChange('graduationRate')}
-              />
-            }
-            label="Graduation Rate"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={options.expendituresPerStudent}
-                onChange={() => handleOptionChange('expendituresPerStudent')}
-              />
-            }
-            label="Expenditures Per Student"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={options.studentToFacultyRatio}
-                onChange={() => handleOptionChange('studentToFacultyRatio')}
-              />
-            }
-            label="Student to Faculty Ratio"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={options.avgTeacherEducationLevel}
-                onChange={() => handleOptionChange('avgTeacherEducationLevel')}
-              />
-            }
-            label="Avg Teacher Education Level"
-          />
-        </div>
+      <div style={{ marginTop: '20px' }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.dropoutRate}
+              onChange={() => handleOptionChange('dropoutRate')}
+            />
+          }
+          label="Dropout Rate"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.spendingPerStudent}
+              onChange={() => handleOptionChange('spendingPerStudent')}
+            />
+          }
+          label="Spending Per Student"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.facultyToStudentRatio}
+              onChange={() => handleOptionChange('facultyToStudentRatio')}
+            />
+          }
+          label="Faculty to Student Ratio"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.avgTeacherDegreeLevel}
+              onChange={() => handleOptionChange('avgTeacherDegreeLevel')}
+            />
+          }
+          label="Avg Teacher Education Level"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.avgTeacherExperience}
+              onChange={() => handleOptionChange('avgTeacherExperience')}
+            />
+          }
+          label="Avg Teacher Experience (Years)"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.collegeBound}
+              onChange={() => handleOptionChange('collegeBound')}
+            />
+          }
+          label="Percent College Bound"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.percentLowIncome}
+              onChange={() => handleOptionChange('percentLowIncome')}
+            />
+          }
+          label="Percent Low Income"
+        />
+        
+      </div>
         <div>
       <KeyRow></KeyRow>
       </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
         {schoolData.map((school, index) => (
-          <SchoolCard key={index} schoolInfo={school} />
+          <SchoolCard key={index} schoolInfo={school} options={options} />
         ))}
       </div>
       </div>

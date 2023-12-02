@@ -25,6 +25,7 @@ const KeyRow: React.FC = () => {
   const tableStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'center',
+    gap: '10px'
   };
 
   const labelStyle: React.CSSProperties = {
@@ -46,27 +47,27 @@ const KeyRow: React.FC = () => {
             <PercentileCircleNull percentile={-1}  color = "rgb(255, 152, 221)" />
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={labelStyle}>0%</p>
-            <PercentileCircle percentile={0} />
+            <p style={labelStyle}>Top 1%</p>
+            <PercentileCircle percentile={1} />
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={labelStyle}>20%</p>
+            <p style={labelStyle}>Top 20%</p>
             <PercentileCircle percentile={20} />
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={labelStyle}>40%</p>
+            <p style={labelStyle}>Top 40%</p>
             <PercentileCircle percentile={40} />
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={labelStyle}>60%</p>
+            <p style={labelStyle}>Top 60%</p>
             <PercentileCircle percentile={60} />
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={labelStyle}>80%</p>
+            <p style={labelStyle}>Top 80%</p>
             <PercentileCircle percentile={80} />
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={labelStyle}>99%</p>
+            <p style={labelStyle}>Top 99%</p>
             <PercentileCircle percentile={100} />
           </div>
         </div>

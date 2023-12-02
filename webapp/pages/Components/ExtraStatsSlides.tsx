@@ -8,6 +8,7 @@ import { SchoolInfo } from './SchoolCard';
 
 interface SchoolCardProps {
   schoolInfo: SchoolInfo;
+  
 }
 
 const ExtraInfo: React.FC<SchoolCardProps> = ({ schoolInfo }) => {

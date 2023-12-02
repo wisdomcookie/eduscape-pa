@@ -14,13 +14,14 @@ const buttonStyle = {
   };
   
 
-  interface Options {
-    graduationRate: boolean;
-    expendituresPerStudent: boolean;
-    studentToFacultyRatio: boolean;
-    avgTeacherEducationLevel: boolean;
+  export interface Options {
+    dropoutRate: boolean;
+    percentLowIncome: boolean;
     collegeBound: boolean;
-    lowIncome: boolean;
+    spendingPerStudent: boolean;
+    facultyToStudentRatio: boolean;
+    avgTeacherExperience: boolean;
+    avgTeacherDegreeLevel: boolean;
   }
 
 const SchoolListComponent: React.FC = () => {
@@ -28,12 +29,13 @@ const SchoolListComponent: React.FC = () => {
   const [schoolData, setSchoolData] = useState<SchoolInfo[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [options, setOptions] = useState<Options>({
-    graduationRate: true,
-    expendituresPerStudent: true,
-    studentToFacultyRatio: true,
-    avgTeacherEducationLevel: true,
+    dropoutRate: true,
+    percentLowIncome: true,
     collegeBound: true,
-    lowIncome: true,
+    spendingPerStudent: true,
+    facultyToStudentRatio: true,
+    avgTeacherExperience: true,
+    avgTeacherDegreeLevel: true,
   });
   const [schoolNames, setSchoolNames] = useState<string[]>([]);
 
@@ -132,38 +134,47 @@ const SchoolListComponent: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={options.graduationRate}
-              onChange={() => handleOptionChange('graduationRate')}
+              checked={options.dropoutRate}
+              onChange={() => handleOptionChange('dropoutRate')}
             />
           }
-          label="Graduation Rate"
+          label="Dropout Rate"
         />
         <FormControlLabel
           control={
             <Checkbox
-              checked={options.expendituresPerStudent}
-              onChange={() => handleOptionChange('expendituresPerStudent')}
+              checked={options.spendingPerStudent}
+              onChange={() => handleOptionChange('spendingPerStudent')}
             />
           }
-          label="Expenditures Per Student"
+          label="Spending Per Student"
         />
         <FormControlLabel
           control={
             <Checkbox
-              checked={options.studentToFacultyRatio}
-              onChange={() => handleOptionChange('studentToFacultyRatio')}
+              checked={options.facultyToStudentRatio}
+              onChange={() => handleOptionChange('facultyToStudentRatio')}
             />
           }
-          label="Student to Faculty Ratio"
+          label="Faculty to Student Ratio"
         />
         <FormControlLabel
           control={
             <Checkbox
-              checked={options.avgTeacherEducationLevel}
-              onChange={() => handleOptionChange('avgTeacherEducationLevel')}
+              checked={options.avgTeacherDegreeLevel}
+              onChange={() => handleOptionChange('avgTeacherDegreeLevel')}
             />
           }
           label="Avg Teacher Education Level"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.avgTeacherExperience}
+              onChange={() => handleOptionChange('avgTeacherExperience')}
+            />
+          }
+          label="Avg Teacher Experience (Years)"
         />
         <FormControlLabel
           control={
@@ -177,8 +188,8 @@ const SchoolListComponent: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={options.lowIncome}
-              onChange={() => handleOptionChange('lowIncome')}
+              checked={options.percentLowIncome}
+              onChange={() => handleOptionChange('percentLowIncome')}
             />
           }
           label="Percent Low Income"
@@ -192,7 +203,7 @@ const SchoolListComponent: React.FC = () => {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
         {schoolData.map((school, index) => (
-          <SchoolCard key={index} schoolInfo={school} />
+          <SchoolCard key={index} schoolInfo={school} options={options} />
         ))}
       </div>
 
