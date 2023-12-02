@@ -1,5 +1,6 @@
 import React from 'react';
 import PercentileCircle from './PercentileCirlce';
+import PercentileCircleNull from './nullPercentileCircle';
 
 const KeyRow: React.FC = () => {
   const containerStyle: React.CSSProperties = {
@@ -36,6 +37,14 @@ const KeyRow: React.FC = () => {
       <div style={titleStyle}>Key for Percentiles in Relation to All Schools</div>
       <div style={tableContainerStyle}>
         <div style={tableStyle}>
+        <div style={{  textAlign: 'center',
+    alignContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',}}>
+            <p style={labelStyle}>Unreported</p>
+            <PercentileCircleNull percentile={-1}  color = "rgb(255, 152, 221)" />
+          </div>
           <div style={{ textAlign: 'center' }}>
             <p style={labelStyle}>0%</p>
             <PercentileCircle percentile={0} />
@@ -57,7 +66,7 @@ const KeyRow: React.FC = () => {
             <PercentileCircle percentile={80} />
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={labelStyle}>100%</p>
+            <p style={labelStyle}>99%</p>
             <PercentileCircle percentile={100} />
           </div>
         </div>

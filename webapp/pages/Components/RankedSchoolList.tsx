@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard component and SchoolInfo type
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import SortableListContainer from './RankedList';
+import KeyRow from './keyRow';
  // Import SortableListContainer component
 
 const buttonStyle = {
