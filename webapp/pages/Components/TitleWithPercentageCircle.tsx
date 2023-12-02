@@ -13,7 +13,7 @@ const TitleWithPercentileCircle: React.FC<TitleWithPercentileCircleProps> = ({ t
       <div style={{ fontSize: '.8em', fontWeight: 'bold', textAlign: 'center', marginBottom: '8px' }}>
         {title}
       </div>
-      <PercentileCircle percentile={percentile} />
+      <PercentileCircle percentile={percentile*100} />
     </div>
   );
 };

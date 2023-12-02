@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard component and SchoolInfo type
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import SortableListContainer from './RankedList';
- // Import SortableListContainer component
 
 const buttonStyle = {
   padding: '10px 20px',
@@ -51,13 +50,7 @@ const Bottom25SchoolList: React.FC = () => {
     try {
         
       const param = sortedItems.join(',');
-      const response = await fetch("http://localhost:8080/schools/bottom25?orderByClause=" + param, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({sortedItems }), // Include sortedItems in the request
-      });
+      const response = await fetch("http://localhost:8080/schools/bottom25?orderByClause=" + param, );
 
       if (!response.ok) {
         throw new Error('Network response was not ok');

@@ -4,6 +4,7 @@ import OverviewBudget from './StatCard';
 import PieChartCard from './PieChartCard';
 import GridWithPercentileCircles from './GirdWithPercentiles';
 import { render } from 'react-dom';
+import ExtraInfo from './ExtraStatsSlides';
 
 
 export interface SchoolInfo {
@@ -12,15 +13,22 @@ export interface SchoolInfo {
     graduationRatePercentile: number;
     dropoutRate: number;
     dropoutRatePercentile: number;
+    percentLowIncome: number;
+    percentLowIncomePercentile: number;
+    collegeBound: number;
+    collegeBoundPercentile: number;
     spendingPerStudent: number;
     spendingPerPercentile: number;
     facultyToStudentRatio: number;
     facultyToStudentRatioPercentile: number;
-    avgTeacherEducationLevel: number;
-    avgTeacherEducationLevelPercentile: number;
+    avgTeacherExperience: number;
+    avgTeacherExperiencePercentile: number;
+    avgTeacherDegreeLevel: number;
+    avgTeacherDegreeLevelPercentile: number;
+    
     percentile: number;
     overall_rating: number;
-    college_bound: number; // Use strings for education level codes
+     // Use strings for education level codes
   }
 
 interface SchoolCardProps {
@@ -102,33 +110,22 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
 
 
       </div >
+      <div style={{ fontSize: '1.2em', fontWeight: 'bold' , paddingTop: '15px'}}>
+          Percentile Rankings:
+        </div>
       <div style={{paddingTop: '30px'}}></div>
       <GridWithPercentileCircles
   graduationRate={schoolInfo.graduationRatePercentile}
   expendituresPerStudent={schoolInfo.spendingPerPercentile}
   studentToFacultyRatio={schoolInfo.facultyToStudentRatioPercentile}
-  avgTeacherEducationLevel={schoolInfo.avgTeacherEducationLevel}
+  avgTeacherEducationLevel={schoolInfo.avgTeacherDegreeLevelPercentile}
   collegeBound= {schoolInfo.college_bound}
-  lowIncome={0}
+  lowIncome={schoolInfo.percentLowIncomePercentile}
+  avgTeacherExperience={schoolInfo.avgTeacherExperiencePercentile}
 />
 
 {showStats && (
-        <div style={infoGridStyle}>
-          <PieChartCard
-            title="Graduation Rate"
-            data={[
-              { title: 'Graduation Rate', value: schoolInfo.graduationRate, color: '#36A2EB' },
-              { title: 'Remaining', value: 100 - schoolInfo.graduationRate, color: '#f0f0f0' },
-            ]}
-            percentile={schoolInfo.percentile}
-          />
-
-          <OverviewBudget value={"$24,000"} difference={15} percentile={99.6} title={"Expenditures Per Student"} />
-
-          <OverviewBudget value={schoolInfo.facultyToStudentRatio + ":1"} difference={15} percentile={99.6} title={"Student to Faculty Ratio"} />
-
-          <OverviewBudget value={getEducationLevelText(schoolInfo.avgTeacherEducationLevel.toString())} difference={15} percentile={99.6} title={"Avg Teacher Education Level"} />
-        </div>
+        <ExtraInfo schoolInfo={schoolInfo}></ExtraInfo>
       )}
 
 <div style = {{paddingTop: '10px'}}>
