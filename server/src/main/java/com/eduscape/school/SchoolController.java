@@ -1,7 +1,9 @@
 package com.eduscape.school;
 
 import com.eduscape.keystone.KeystoneRepository;
+import com.eduscape.query_objects.RateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,56 +39,80 @@ public class SchoolController {
         return new ResponseEntity<>(names, HttpStatus.OK);
     }
 
+    /**
+     * Gets all "rate" data for a school. This will call multiple individual queries.
+     * @param name The name of the school
+     * @param year The year of data to get (leave blank to get all years)
+     * @return All 5 rates and their percentiles
+     */
     @GetMapping(path="/rates")
-    public @ResponseBody ResponseEntity<SchoolDataNormalized> getRates(String name) {
-        School school = null;
-        for (School s : schoolRepository.findAll()) {
-            if (s.getName().equals(name)) {
-                school = s;
-                break;
-            }
-        }
-        if (school == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(getData(school), HttpStatus.OK);
+    public @ResponseBody ResponseEntity<SchoolDataNormalized> getRates(String name, Integer year) {
+        return new ResponseEntity<>(year != null ? getData(name, year) : getData(name), HttpStatus.OK);
     }
 
-    private SchoolDataNormalized getData(School school) {
+    private SchoolDataNormalized getData(String name) {
+        Optional<RateWrapper> graduationRateData = schoolDataRepository.getGraduationRate(name);
+        Optional<RateWrapper> dropoutRateData = schoolDataRepository.getDropoutRate(name);
+        Optional<RateWrapper> spendingPerStudentData = schoolDataRepository.getSpendingPerStudent(name);
+        Optional<RateWrapper> studentFacultyRatioData = schoolDataRepository.getFacultyToStudentRatio(name);
+        Optional<RateWrapper> teacherEducationLevelData = schoolDataRepository.getTeacherEducationLevel(name);
+
         return new SchoolDataNormalized(
-                school.getName(),
-                Math.random(),
-                0,
-                Math.random(),
-                0,
-                Math.random(),
-                0,
-                Math.random(),
-                0,
-                Math.random(),
-                0
+                name,
+                graduationRateData.map(RateWrapper::getRate).orElse(-1.0),
+                graduationRateData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
+                dropoutRateData.map(RateWrapper::getRate).orElse(-1.0),
+                dropoutRateData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
+                spendingPerStudentData.map(RateWrapper::getRate).orElse(-1.0),
+                spendingPerStudentData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
+                studentFacultyRatioData.map(RateWrapper::getRate).orElse(-1.0),
+                studentFacultyRatioData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
+                teacherEducationLevelData.map(RateWrapper::getRate).orElse(-1.0),
+                teacherEducationLevelData.map(RateWrapper::getPercent_Rank).orElse(-1.0)
+        );
+    }
+
+    private SchoolDataNormalized getData(String name, Integer year) {
+        Optional<RateWrapper> graduationRateData = schoolDataRepository.getGraduationRate(name, year);
+        Optional<RateWrapper> dropoutRateData = schoolDataRepository.getDropoutRate(name, year);
+        Optional<RateWrapper> spendingPerStudentData = schoolDataRepository.getSpendingPerStudent(name, year);
+        Optional<RateWrapper> studentFacultyRatioData = schoolDataRepository.getFacultyToStudentRatio(name, year);
+        Optional<RateWrapper> teacherEducationLevelData = schoolDataRepository.getTeacherEducationLevel(name, year);
+
+        return new SchoolDataNormalized(
+                name,
+                graduationRateData.map(RateWrapper::getRate).orElse(-1.0),
+                graduationRateData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
+                dropoutRateData.map(RateWrapper::getRate).orElse(-1.0),
+                dropoutRateData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
+                spendingPerStudentData.map(RateWrapper::getRate).orElse(-1.0),
+                spendingPerStudentData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
+                studentFacultyRatioData.map(RateWrapper::getRate).orElse(-1.0),
+                studentFacultyRatioData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
+                teacherEducationLevelData.map(RateWrapper::getRate).orElse(-1.0),
+                teacherEducationLevelData.map(RateWrapper::getPercent_Rank).orElse(-1.0)
         );
     }
 
     @GetMapping(path="/top25")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTop25(String orderByClause) {
-        return getTopSchools(25, orderByClause);
+    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTop25(Integer year, String orderByClause) {
+        return getTopSchools(25, year, orderByClause);
     }
 
     @GetMapping(path="/bottom25")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getBottom25(String orderByClause) {
-        return getBottomSchools(25, orderByClause);
+    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getBottom25(Integer year, String orderByClause) {
+        return getBottomSchools(25, year, orderByClause);
     }
 
     /**
      * Gets the top n schools based on the provided ordering scheme
      * @param n The number of schools to get
+     * @param year The year of data to get (leave blank to get all years)
      * @param orderByClause The ordering of the ORDER BY clause
      * @return The top n schools ordered
      */
     @GetMapping(path="/top")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTopSchools(int n, String orderByClause) {
+    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTopSchools(int n, Integer year, String orderByClause) {
         List<School> schools = new ArrayList<>();
         for (School s : schoolRepository.findAll()) {
             schools.add(s);
@@ -95,7 +121,7 @@ public class SchoolController {
 
         List<SchoolDataNormalized> schoolData = new ArrayList<>();
         for (int i = 0; i < Math.min(schools.size(), n); i++) {
-            schoolData.add(getData(schools.get(i)));
+            schoolData.add(year != null ? getData(schools.get(i).getName(), year) : getData(schools.get(i).getName()));
         }
 
         return new ResponseEntity<>(schoolData, HttpStatus.OK);
@@ -104,11 +130,12 @@ public class SchoolController {
     /**
      * Gets the bottom n schools based on the provided ordering scheme
      * @param n The number of schools to get
+     * @param year The year of data to get (leave blank to get all years)
      * @param orderByClause The ordering of the ORDER BY clause
      * @return The bottom n schools ordered
      */
     @GetMapping(path="/bottom")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getBottomSchools(int n, String orderByClause) {
+    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getBottomSchools(int n, Integer year, String orderByClause) {
         List<School> schools = new ArrayList<>();
         for (School s : schoolRepository.findAll()) {
             schools.add(s);
@@ -117,7 +144,7 @@ public class SchoolController {
 
         List<SchoolDataNormalized> schoolData = new ArrayList<>();
         for (int i = schools.size()-1; i >= Math.max(schools.size() - n, 0); i--) {
-            schoolData.add(getData(schools.get(i)));
+            schoolData.add(year != null ? getData(schools.get(i).getName(), year) : getData(schools.get(i).getName()));
         }
 
         return new ResponseEntity<>(schoolData, HttpStatus.OK);
@@ -148,13 +175,85 @@ public class SchoolController {
      * @return The graduation rate and its percentile
      */
     @GetMapping(path="/graduationRate")
-    public @ResponseBody ResponseEntity<Object> getSchoolGraduationRate(String name, Integer year) {
+    public @ResponseBody ResponseEntity<RateWrapper> getSchoolGraduationRate(String name, Integer year) {
         if (year == null) {
-            Optional<Object> data = schoolDataRepository.getGraduationRate(name);
+            Optional<RateWrapper> data = schoolDataRepository.getGraduationRate(name);
             return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         }
         else {
-            Optional<Object> data = schoolDataRepository.getGraduationRate(name, year);
+            Optional<RateWrapper> data = schoolDataRepository.getGraduationRate(name, year);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+    }
+
+    /**
+     * Calculates the school's dropout rate and its percentile
+     * @param name The name of the school
+     * @param year The year of data to get (leave blank to get all years)
+     * @return The dropout rate and its percentile
+     */
+    @GetMapping(path="/dropoutRate")
+    public @ResponseBody ResponseEntity<RateWrapper> getSchoolDropoutRate(String name, Integer year) {
+        if (year == null) {
+            Optional<RateWrapper> data = schoolDataRepository.getDropoutRate(name);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+        else {
+            Optional<RateWrapper> data = schoolDataRepository.getDropoutRate(name, year);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+    }
+
+    /**
+     * Calculates the school's (district) spending per student and its percentile
+     * @param name The name of the school
+     * @param year The year of data to get (leave blank to get all years)
+     * @return The spending per student rate and its percentile
+     */
+    @GetMapping(path="/spendingPerStudent")
+    public @ResponseBody ResponseEntity<RateWrapper> getDistrictSpendingPerStudent(String name, Integer year) {
+        if (year == null) {
+            Optional<RateWrapper> data = schoolDataRepository.getSpendingPerStudent(name);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+        else {
+            Optional<RateWrapper> data = schoolDataRepository.getSpendingPerStudent(name, year);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+    }
+
+    /**
+     * Calculates the school's (district) student to faculty ratio and its percentile
+     * @param name The name of the school
+     * @param year The year of data to get (leave blank to get all years)
+     * @return The student to faculty ratio rate and its percentile
+     */
+    @GetMapping(path="/studentFacultyRatio")
+    public @ResponseBody ResponseEntity<RateWrapper> getSchoolStudentToFacultyRatio(String name, Integer year) {
+        if (year == null) {
+            Optional<RateWrapper> data = schoolDataRepository.getFacultyToStudentRatio(name);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+        else {
+            Optional<RateWrapper> data = schoolDataRepository.getFacultyToStudentRatio(name, year);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+    }
+
+    /**
+     * Calculates the school's (district) teacher education level and its percentile
+     * @param name The name of the school
+     * @param year The year of data to get (leave blank to get all years)
+     * @return The teacher education level rate and its percentile
+     */
+    @GetMapping(path="/teacherEducationLevel")
+    public @ResponseBody ResponseEntity<RateWrapper> getSchoolTeacherEducationLevel(String name, Integer year) {
+        if (year == null) {
+            Optional<RateWrapper> data = schoolDataRepository.getTeacherEducationLevel(name);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+        else {
+            Optional<RateWrapper> data = schoolDataRepository.getTeacherEducationLevel(name, year);
             return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         }
     }
