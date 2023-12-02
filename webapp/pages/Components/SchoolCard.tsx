@@ -5,12 +5,11 @@ import PieChartCard from './PieChartCard';
 import GridWithPercentileCircles from './GirdWithPercentiles';
 import { render } from 'react-dom';
 import ExtraInfo from './ExtraStatsSlides';
+import { Options } from './ComparisonScreen';
 
 
 export interface SchoolInfo {
     name: string;
-    graduationRate: number;
-    graduationRatePercentile: number;
     dropoutRate: number;
     dropoutRatePercentile: number;
     percentLowIncome: number;
@@ -33,9 +32,10 @@ export interface SchoolInfo {
 
 interface SchoolCardProps {
   schoolInfo: SchoolInfo;
+  options: Options;
 }
 
-const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
+const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options }) => {
   const [showStats, setShowStats] = useState(false);
 
   const handleShowStats = () => {
@@ -97,7 +97,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
     
       return (
         <div className="card" style={cardStyle}>
-          <h1 style={{ fontSize: '4em', fontWeight: 'bold' }}>{schoolInfo.name}</h1>
+          <h1 style={{ fontSize: '2em', fontWeight: 'bold', minHeight: '110px' }}>{schoolInfo.name}</h1>
           <div style={{ marginTop: '20px' }}>
         <div style={{ fontSize: '1.2em', fontWeight: 'bold' }}>
           Overall Rating:
@@ -115,14 +115,13 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
         </div>
       <div style={{paddingTop: '30px'}}></div>
       <GridWithPercentileCircles
-  graduationRate={schoolInfo.graduationRatePercentile}
-  expendituresPerStudent={schoolInfo.spendingPerPercentile}
-  studentToFacultyRatio={schoolInfo.facultyToStudentRatioPercentile}
-  avgTeacherEducationLevel={schoolInfo.avgTeacherDegreeLevelPercentile}
-  collegeBound= {schoolInfo.college_bound}
-  lowIncome={schoolInfo.percentLowIncomePercentile}
-  avgTeacherExperience={schoolInfo.avgTeacherExperiencePercentile}
-/>
+        expendituresPerStudent={options.spendingPerStudent ? schoolInfo.spendingPerPercentile : undefined}
+        studentToFacultyRatio={options.facultyToStudentRatio ? schoolInfo.facultyToStudentRatioPercentile : undefined}
+        avgTeacherEducationLevel={options.avgTeacherDegreeLevel ? schoolInfo.avgTeacherDegreeLevelPercentile : undefined}
+        collegeBound={options.collegeBound ? schoolInfo.collegeBoundPercentile : undefined}
+        lowIncome={options.percentLowIncome ? schoolInfo.percentLowIncomePercentile : undefined}
+        avgTeacherExperience={options.avgTeacherExperience ? schoolInfo.avgTeacherExperiencePercentile : undefined}
+      />
 
 {showStats && (
         <ExtraInfo schoolInfo={schoolInfo}></ExtraInfo>
@@ -141,24 +140,6 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
   );
 };
 
-const getEducationLevelText = (educationLevelCode: string) => {
-  switch (educationLevelCode) {
-    case '1':
-      return 'Less than high school graduate';
-    case '2':
-      return 'High school graduate';
-    case '3':
-      return 'Some college, less than bachelor\'s degree';
-    case '4':
-      return 'Bachelor\'s degree (includes master\'s equivalency)';
-    case '5':
-      return 'Master\'s degree';
-    case '6':
-      return 'Doctor\'s degree';
-    default:
-      return 'Unknown';
-  }
-};
 
 export default SchoolCard;
 /*

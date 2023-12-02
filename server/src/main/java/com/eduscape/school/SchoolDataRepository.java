@@ -19,35 +19,6 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "WHERE year=?2")
     Optional<Iterable<Object>> findSchoolDataByName(@Param("name") String name, @Param("year") Integer year);
 
-    @Query(nativeQuery = true, value = "SELECT * " +
-            "FROM ( " +
-            "SELECT school_number, name, average_graduation_rate rate, percent_rank() " +
-            "OVER ( ORDER BY rate DESC ) " +
-            "AS 'percent_rank' " +
-            "FROM school NATURAL JOIN ( " +
-            "SELECT school_number, name, AVG(graduate_count/total_enrollment) average_graduation_rate " +
-            "FROM school NATURAL JOIN school_data " +
-            "WHERE graduate_count>=0 " +
-            "GROUP BY school_number " +
-            ") SD " +
-            ") temp " +
-            "WHERE name=?1")
-    Optional<RateWrapper> getGraduationRate(@Param("name") String name);
-
-    @Query(nativeQuery = true, value = "SELECT * " +
-            "FROM ( " +
-            "SELECT school_number, name, average_graduation_rate rate, percent_rank() " +
-            "OVER ( ORDER BY rate DESC ) " +
-            "AS 'percent_rank' " +
-            "FROM school NATURAL JOIN ( " +
-            "SELECT school_number, name, year, graduate_count/total_enrollment average_graduation_rate " +
-            "FROM school NATURAL JOIN school_data " +
-            "WHERE graduate_count>=0 AND year=?2 " +
-            "GROUP BY school_number " +
-            ") SD " +
-            ") temp " +
-            "WHERE name=?1")
-    Optional<RateWrapper> getGraduationRate(@Param("name") String name, @Param("year") Integer year);
 
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
@@ -78,6 +49,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             ") temp " +
             "WHERE name=?1")
     Optional<RateWrapper> getDropoutRate(@Param("name") String name, @Param("year") Integer year);
+
 
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
@@ -110,7 +82,6 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
     Optional<RateWrapper> getPercentLowIncome(@Param("name") String name, @Param("year") Integer year);
 
 
-
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
             "SELECT school_number, name, percent_college_bound rate, percent_rank() " +
@@ -140,6 +111,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             ") temp " +
             "WHERE name=?1")
     Optional<RateWrapper> getCollegeBound(@Param("name") String name, @Param("year") Integer year);
+
 
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
@@ -171,6 +143,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "WHERE name=?1")
     Optional<RateWrapper> getSpendingPerStudent(@Param("name") String name, @Param("year") Integer year);
 
+
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
             "SELECT school_number, name, average_teacher_student_ratio rate, percent_rank() " +
@@ -201,6 +174,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "WHERE name=?1")
     Optional<RateWrapper> getFacultyToStudentRatio(@Param("name") String name, @Param("year") Integer year);
 
+
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
             "SELECT school_number, name, average_teacher_experience rate, percent_rank() " +
@@ -230,6 +204,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             ") temp " +
             "WHERE name=?1")
     Optional<RateWrapper> getTeacherExperience(@Param("name") String name, @Param("year") Integer year);
+
 
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +

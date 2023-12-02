@@ -8,6 +8,7 @@ import { SchoolInfo } from './SchoolCard';
 
 interface SchoolCardProps {
   schoolInfo: SchoolInfo;
+  
 }
 
 const ExtraInfo: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
@@ -65,19 +66,18 @@ const ExtraInfo: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
       <div style={infoGridStyle}>
         <div>
           <p><span style={labelStyle}>Average Teacher Degree Level:</span> {schoolInfo?.avgTeacherDegreeLevel !== null && schoolInfo?.avgTeacherDegreeLevel !== -1 ? getEducationLevelText(schoolInfo?.avgTeacherDegreeLevel) : 'unreported'}</p>
-          <p><span style={labelStyle}>Average Teacher Experience:</span> {schoolInfo?.avgTeacherExperience !== null && schoolInfo?.avgTeacherExperience !== -1 ? schoolInfo.avgTeacherExperience : 'unreported'}</p>
-          <p><span style={labelStyle}>Faculty to Student Ratio:</span> {schoolInfo?.facultyToStudentRatio !== null && schoolInfo?.facultyToStudentRatio !== -1 ? schoolInfo.facultyToStudentRatio : 'unreported'}</p>
+          <p><span style={labelStyle}>Average Teacher Experience:</span> {schoolInfo?.avgTeacherExperience !== null && schoolInfo?.avgTeacherExperience !== -1 ?  Math.round(schoolInfo.avgTeacherExperience)  : 'unreported'}</p>
+          <p><span style={labelStyle}>Faculty to Student Ratio:</span> {schoolInfo?.facultyToStudentRatio !== null && schoolInfo?.facultyToStudentRatio !== -1 ? Math.round(schoolInfo.facultyToStudentRatio) : 'unreported'}</p>
         </div>
 
         <div>
-          <p><span style={labelStyle}>Graduation Rate:</span> {schoolInfo?.graduationRate !== null && schoolInfo?.graduationRate !== -1 ? schoolInfo.graduationRate : 'unreported'}</p>
-          <p><span style={labelStyle}>Percent Drop Out:</span> {schoolInfo?.dropoutRate !== null && schoolInfo?.dropoutRate !== -1 ? schoolInfo.dropoutRate : 'unreported'}</p>
-          <p><span style={labelStyle}>Percent Low Income:</span> {schoolInfo?.percentLowIncome !== null && schoolInfo?.percentLowIncome !== -1 ? schoolInfo.percentLowIncome : 'unreported'}</p>
+          <p><span style={labelStyle}>Percent Drop Out:</span> {schoolInfo?.dropoutRate !== null && schoolInfo?.dropoutRate !== -1 ? Math.round(schoolInfo.dropoutRate*100).toString() + "%" : 'unreported'}</p>
+          <p><span style={labelStyle}>Percent Low Income:</span> {schoolInfo?.percentLowIncome !== null && schoolInfo?.percentLowIncome !== -1 ? Math.round(schoolInfo.percentLowIncome*100).toString() + "%" : 'unreported'}</p>
         </div>
 
         <div>
-          <p><span style={labelStyle}>Spending Per Student:</span> {schoolInfo?.spendingPerStudent !== null && schoolInfo?.spendingPerStudent !== -1 ? schoolInfo.spendingPerStudent : 'unreported'}</p>
-          <p><span style={labelStyle}>Percent College Bound:</span> {schoolInfo?.collegeBound !== null && schoolInfo?.collegeBound !== -1 ? schoolInfo.collegeBound : 'unreported'}</p>
+          <p><span style={labelStyle}>Spending Per Student:</span> {schoolInfo?.spendingPerStudent !== null && schoolInfo?.spendingPerStudent !== -1 ? "$" +Math.round(schoolInfo.spendingPerStudent) : 'unreported'}</p>
+          <p><span style={labelStyle}>Percent College Bound:</span> {schoolInfo?.collegeBound !== null && schoolInfo?.collegeBound !== -1 ? Math.round(schoolInfo.collegeBound*100).toString() + "%" : 'unreported'}</p>
 
         </div>
       </div>
