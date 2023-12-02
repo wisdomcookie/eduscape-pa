@@ -81,6 +81,36 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
 
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
+            "SELECT school_number, name, percent_low_income rate, percent_rank() " +
+            "OVER ( ORDER BY rate ) " +
+            "AS 'percent_rank' " +
+            "FROM school NATURAL JOIN ( " +
+            "SELECT school_number, name, AVG(low_income_enrollment/total_enrollment) percent_low_income " +
+            "FROM school NATURAL JOIN school_data " +
+            "WHERE low_income_enrollment>0 AND total_enrollment>=0 " +
+            "GROUP BY school_number " +
+            ") SD " +
+            ") temp " +
+            "WHERE name=?1")
+    Optional<RateWrapper> getPercentLowIncome(@Param("name") String name);
+
+    @Query(nativeQuery = true, value = "SELECT * " +
+            "FROM ( " +
+            "SELECT school_number, name, percent_low_income rate, percent_rank() " +
+            "OVER ( ORDER BY rate ) " +
+            "AS 'percent_rank' " +
+            "FROM school NATURAL JOIN ( " +
+            "SELECT school_number, name, year, AVG(low_income_enrollment/total_enrollment) percent_low_income " +
+            "FROM school NATURAL JOIN school_data " +
+            "WHERE low_income_enrollment>0 AND total_enrollment>=0 AND year=?2 " +
+            "GROUP BY school_number " +
+            ") SD " +
+            ") temp " +
+            "WHERE name=?1")
+    Optional<RateWrapper> getPercentLowIncome(@Param("name") String name, @Param("year") Integer year);
+
+    @Query(nativeQuery = true, value = "SELECT * " +
+            "FROM ( " +
             "SELECT school_number, name, average_spending rate, percent_rank() " +
             "OVER ( ORDER BY rate DESC ) " +
             "AS 'percent_rank' " +
@@ -141,18 +171,33 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
 
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
-            "SELECT school_number, name, average_teacher_education rate, percent_rank() " +
+            "SELECT school_number, name, average_teacher_experience rate, percent_rank() " +
             "OVER ( ORDER BY rate DESC ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT aun, AVG(average_experience) average_teacher_education " +
+            "SELECT aun, AVG(average_experience) average_teacher_experience " +
             "FROM district NATURAL JOIN district_data " +
             "WHERE average_experience>0 " +
             "GROUP BY aun " +
             ") SD " +
             ") temp " +
             "WHERE name=?1")
-    Optional<RateWrapper> getTeacherEducationLevel(@Param("name") String name);
+    Optional<RateWrapper> getTeacherExperience(@Param("name") String name);
+
+    @Query(nativeQuery = true, value = "SELECT * " +
+            "FROM ( " +
+            "SELECT school_number, name, average_teacher_experience rate, percent_rank() " +
+            "OVER ( ORDER BY rate DESC ) " +
+            "AS 'percent_rank' " +
+            "FROM school NATURAL JOIN ( " +
+            "SELECT aun, year, AVG(average_experience) average_teacher_experience " +
+            "FROM district NATURAL JOIN district_data " +
+            "WHERE average_experience>0 AND year=?2 " +
+            "GROUP BY aun " +
+            ") SD " +
+            ") temp " +
+            "WHERE name=?1")
+    Optional<RateWrapper> getTeacherExperience(@Param("name") String name, @Param("year") Integer year);
 
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
@@ -160,13 +205,28 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate DESC ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT aun, year, AVG(average_experience) average_teacher_education " +
+            "SELECT aun, AVG(average_degree) average_teacher_education " +
             "FROM district NATURAL JOIN district_data " +
-            "WHERE average_experience>0 AND year=?2 " +
+            "WHERE average_degree>0 " +
             "GROUP BY aun " +
             ") SD " +
             ") temp " +
             "WHERE name=?1")
-    Optional<RateWrapper> getTeacherEducationLevel(@Param("name") String name, @Param("year") Integer year);
+    Optional<RateWrapper> getTeacherDegreeLevel(@Param("name") String name);
+
+    @Query(nativeQuery = true, value = "SELECT * " +
+            "FROM ( " +
+            "SELECT school_number, name, average_teacher_education rate, percent_rank() " +
+            "OVER ( ORDER BY rate DESC ) " +
+            "AS 'percent_rank' " +
+            "FROM school NATURAL JOIN ( " +
+            "SELECT aun, year, AVG(average_degree) average_teacher_education " +
+            "FROM district NATURAL JOIN district_data " +
+            "WHERE average_degree>0 AND year=?2 " +
+            "GROUP BY aun " +
+            ") SD " +
+            ") temp " +
+            "WHERE name=?1")
+    Optional<RateWrapper> getTeacherDegreeLevel(@Param("name") String name, @Param("year") Integer year);
 
 }
