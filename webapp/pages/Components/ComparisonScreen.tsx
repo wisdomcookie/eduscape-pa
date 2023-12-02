@@ -109,6 +109,7 @@ const SchoolListComponent: React.FC = () => {
   return (
     <div style={{ padding: '10px',height: 'fit-content', backgroundColor: '#F2E3DB' }}>
       <Typography variant="h2" style={{ marginBottom: '16px',  }}>Search and Compare Schools</Typography>
+      
       <div style={{ display: 'flex' }}>
         <input
           type="text"
@@ -129,7 +130,7 @@ const SchoolListComponent: React.FC = () => {
 
 
       {error && <div>{error}</div>}
-
+      <h1 style={{ fontSize: '2em', fontWeight: 'bold', }}>Visability Options</h1>
       <div style={{ marginTop: '20px' }}>
         <FormControlLabel
           control={
