@@ -40,7 +40,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate DESC ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT school_number, name, year, AVG(graduate_count/total_enrollment) average_graduation_rate " +
+            "SELECT school_number, name, year, graduate_count/total_enrollment average_graduation_rate " +
             "FROM school NATURAL JOIN school_data " +
             "WHERE graduate_count>=0 AND year=?2 " +
             "GROUP BY school_number " +
@@ -70,7 +70,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT school_number, name, year, AVG(graduate_count/total_enrollment) average_dropout_rate " +
+            "SELECT school_number, name, year, graduate_count/total_enrollment average_dropout_rate " +
             "FROM school NATURAL JOIN school_data " +
             "WHERE dropout_count>=0 AND year=?2 " +
             "GROUP BY school_number " +
@@ -100,7 +100,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT school_number, name, year, AVG(low_income_enrollment/total_enrollment) percent_low_income " +
+            "SELECT school_number, name, year, low_income_enrollment/total_enrollment percent_low_income " +
             "FROM school NATURAL JOIN school_data " +
             "WHERE low_income_enrollment>0 AND total_enrollment>=0 AND year=?2 " +
             "GROUP BY school_number " +
@@ -108,6 +108,38 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             ") temp " +
             "WHERE name=?1")
     Optional<RateWrapper> getPercentLowIncome(@Param("name") String name, @Param("year") Integer year);
+
+
+
+    @Query(nativeQuery = true, value = "SELECT * " +
+            "FROM ( " +
+            "SELECT school_number, name, percent_college_bound rate, percent_rank() " +
+            "OVER ( ORDER BY rate ) " +
+            "AS 'percent_rank' " +
+            "FROM school NATURAL JOIN ( " +
+            "SELECT school_number, name, AVG(college_bound/graduate_count) percent_college_bound " +
+            "FROM school NATURAL JOIN school_data " +
+            "WHERE college_bound>0 AND graduate_count>0 " +
+            "GROUP BY school_number " +
+            ") SD " +
+            ") temp " +
+            "WHERE name=?1")
+    Optional<RateWrapper> getCollegeBound(@Param("name") String name);
+
+    @Query(nativeQuery = true, value = "SELECT * " +
+            "FROM ( " +
+            "SELECT school_number, name, percent_college_bound rate, percent_rank() " +
+            "OVER ( ORDER BY rate ) " +
+            "AS 'percent_rank' " +
+            "FROM school NATURAL JOIN ( " +
+            "SELECT school_number, name, year, college_bound/graduate_count percent_college_bound " +
+            "FROM school NATURAL JOIN school_data " +
+            "WHERE college_bound>0 AND graduate_count>0 AND year=?2 " +
+            "GROUP BY school_number " +
+            ") SD " +
+            ") temp " +
+            "WHERE name=?1")
+    Optional<RateWrapper> getCollegeBound(@Param("name") String name, @Param("year") Integer year);
 
     @Query(nativeQuery = true, value = "SELECT * " +
             "FROM ( " +
@@ -130,7 +162,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate DESC ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT aun, year, AVG(expenditures/enrollment) average_spending " +
+            "SELECT aun, year, expenditures/enrollment average_spending " +
             "FROM district NATURAL JOIN district_data " +
             "WHERE expenditures>0 AND enrollment>0 AND year=?2 " +
             "GROUP BY aun " +
@@ -160,7 +192,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate DESC ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT aun, year, AVG(enrollment/professional_personnel) average_teacher_student_ratio " +
+            "SELECT aun, year, enrollment/professional_personnel average_teacher_student_ratio " +
             "FROM district NATURAL JOIN district_data " +
             "WHERE professional_personnel>0 AND enrollment>0 AND year=?2 " +
             "GROUP BY aun " +
@@ -190,7 +222,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate DESC ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT aun, year, AVG(average_experience) average_teacher_experience " +
+            "SELECT aun, year, average_experience average_teacher_experience " +
             "FROM district NATURAL JOIN district_data " +
             "WHERE average_experience>0 AND year=?2 " +
             "GROUP BY aun " +
@@ -220,7 +252,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate DESC ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT aun, year, AVG(average_degree) average_teacher_education " +
+            "SELECT aun, year, average_degree average_teacher_education " +
             "FROM district NATURAL JOIN district_data " +
             "WHERE average_degree>0 AND year=?2 " +
             "GROUP BY aun " +
