@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard component and SchoolInfo type
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import SortableListContainer from './RankedList';
+import KeyRow from './keyRow';
 
 const buttonStyle = {
   padding: '10px 20px',
@@ -109,6 +110,9 @@ const Bottom25SchoolList: React.FC = () => {
             label="Avg Teacher Education Level"
           />
         </div>
+        <div>
+      <KeyRow></KeyRow>
+      </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
         {schoolData.map((school, index) => (
           <SchoolCard key={index} schoolInfo={school} />

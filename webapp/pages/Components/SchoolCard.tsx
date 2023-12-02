@@ -9,8 +9,6 @@ import ExtraInfo from './ExtraStatsSlides';
 
 export interface SchoolInfo {
     name: string;
-    graduationRate: number;
-    graduationRatePercentile: number;
     dropoutRate: number;
     dropoutRatePercentile: number;
     percentLowIncome: number;
@@ -115,11 +113,10 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
         </div>
       <div style={{paddingTop: '30px'}}></div>
       <GridWithPercentileCircles
-  graduationRate={schoolInfo.graduationRatePercentile}
   expendituresPerStudent={schoolInfo.spendingPerPercentile}
   studentToFacultyRatio={schoolInfo.facultyToStudentRatioPercentile}
   avgTeacherEducationLevel={schoolInfo.avgTeacherDegreeLevelPercentile}
-  collegeBound= {schoolInfo.college_bound}
+  collegeBound= {schoolInfo.collegeBoundPercentile}
   lowIncome={schoolInfo.percentLowIncomePercentile}
   avgTeacherExperience={schoolInfo.avgTeacherExperiencePercentile}
 />

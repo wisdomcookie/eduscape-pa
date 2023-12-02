@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard component and SchoolInfo type
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
+import KeyRow from './keyRow';
 const buttonStyle = {
     padding: '10px 20px',
     borderRadius: '10px',
@@ -184,6 +185,10 @@ const SchoolListComponent: React.FC = () => {
         />
         
       </div>
+      <div>
+      <KeyRow></KeyRow>
+      </div>
+      
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
         {schoolData.map((school, index) => (

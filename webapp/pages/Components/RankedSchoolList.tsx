@@ -116,6 +116,9 @@ const RankedSchoolList: React.FC = () => {
             label="Avg Teacher Education Level"
           />
         </div>
+        <div>
+      <KeyRow></KeyRow>
+      </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
         {schoolData.map((school, index) => (
           <SchoolCard key={index} schoolInfo={school} />
