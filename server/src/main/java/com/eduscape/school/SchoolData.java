@@ -34,6 +34,15 @@ public class SchoolData {
     @Column(name = "low_income_enrollment")
     private int lowIncomeEnrollment;
 
+    @Column(name = "college_bound_percentile", columnDefinition = "FLOAT DEFAULT -1.0")
+    private float collegeBoundPercentile;
+
+    @Column(name = "dropout_percentile", columnDefinition = "FLOAT DEFAULT -1.0")
+    private float dropoutPercentile;
+
+    @Column(name = "low_income_percentile", columnDefinition = "FLOAT DEFAULT -1.0")
+    private float lowIncomePercentile;
+
     public SchoolData(int schoolID, short year, int initialEnrollment, int dropoutCount, int graduateCount, int collegeBound, int totalEnrollment, int lowIncomeEnrollment) {
         this.schoolID = schoolID;
         this.year = year;
@@ -43,6 +52,20 @@ public class SchoolData {
         this.collegeBound = collegeBound;
         this.totalEnrollment = totalEnrollment;
         this.lowIncomeEnrollment = lowIncomeEnrollment;
+    }
+
+    public SchoolData(int schoolID, short year, int initialEnrollment, int dropoutCount, int graduateCount, int collegeBound, int totalEnrollment, int lowIncomeEnrollment, float collegeBoundPercentile, float dropoutPercentile, float lowIncomePercentile) {
+        this.schoolID = schoolID;
+        this.year = year;
+        this.initialEnrollment = initialEnrollment;
+        this.dropoutCount = dropoutCount;
+        this.graduateCount = graduateCount;
+        this.collegeBound = collegeBound;
+        this.totalEnrollment = totalEnrollment;
+        this.lowIncomeEnrollment = lowIncomeEnrollment;
+        this.collegeBoundPercentile = collegeBoundPercentile;
+        this.dropoutPercentile = dropoutPercentile;
+        this.lowIncomePercentile = lowIncomePercentile;
     }
 
     public int getSchoolID() {
@@ -107,5 +130,29 @@ public class SchoolData {
 
     public void setLowIncomeEnrollment(int lowIncomeEnrollment) {
         this.lowIncomeEnrollment = lowIncomeEnrollment;
+    }
+
+    public float getCollegeBoundPercentile() {
+        return collegeBoundPercentile;
+    }
+
+    public void setCollegeBoundPercentile(float collegeBoundPercentile) {
+        this.collegeBoundPercentile = collegeBoundPercentile;
+    }
+
+    public float getDropoutPercentile() {
+        return dropoutPercentile;
+    }
+
+    public void setDropoutPercentile(float dropoutPercentile) {
+        this.dropoutPercentile = dropoutPercentile;
+    }
+
+    public float getLowIncomePercentile() {
+        return lowIncomePercentile;
+    }
+
+    public void setLowIncomePercentile(float lowIncomePercentile) {
+        this.lowIncomePercentile = lowIncomePercentile;
     }
 }

@@ -41,7 +41,7 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "OVER ( ORDER BY rate ) " +
             "AS 'percent_rank' " +
             "FROM school NATURAL JOIN ( " +
-            "SELECT school_number, name, year, graduate_count/total_enrollment average_dropout_rate " +
+            "SELECT school_number, name, year, dropout_count/total_enrollment average_dropout_rate " +
             "FROM school NATURAL JOIN school_data " +
             "WHERE dropout_count>=0 AND year=?2 " +
             "GROUP BY school_number " +
