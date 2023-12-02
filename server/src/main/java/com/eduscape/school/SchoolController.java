@@ -51,7 +51,6 @@ public class SchoolController {
     }
 
     private SchoolDataNormalized getData(String name) {
-        Optional<RateWrapper> graduationRateData = schoolDataRepository.getGraduationRate(name);
         Optional<RateWrapper> dropoutRateData = schoolDataRepository.getDropoutRate(name);
         Optional<RateWrapper> lowIncomeData = schoolDataRepository.getPercentLowIncome(name);
         Optional<RateWrapper> collegeBoundData = schoolDataRepository.getCollegeBound(name);
@@ -62,8 +61,6 @@ public class SchoolController {
 
         return new SchoolDataNormalized(
                 name,
-                graduationRateData.map(RateWrapper::getRate).orElse(-1.0),
-                graduationRateData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
                 dropoutRateData.map(RateWrapper::getRate).orElse(-1.0),
                 dropoutRateData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
                 lowIncomeData.map(RateWrapper::getRate).orElse(-1.0),
@@ -82,7 +79,6 @@ public class SchoolController {
     }
 
     private SchoolDataNormalized getData(String name, Integer year) {
-        Optional<RateWrapper> graduationRateData = schoolDataRepository.getGraduationRate(name, year);
         Optional<RateWrapper> dropoutRateData = schoolDataRepository.getDropoutRate(name, year);
         Optional<RateWrapper> lowIncomeData = schoolDataRepository.getPercentLowIncome(name, year);
         Optional<RateWrapper> collegeBoundData = schoolDataRepository.getCollegeBound(name, year);
@@ -93,8 +89,6 @@ public class SchoolController {
 
         return new SchoolDataNormalized(
                 name,
-                graduationRateData.map(RateWrapper::getRate).orElse(-1.0),
-                graduationRateData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
                 dropoutRateData.map(RateWrapper::getRate).orElse(-1.0),
                 dropoutRateData.map(RateWrapper::getPercent_Rank).orElse(-1.0),
                 lowIncomeData.map(RateWrapper::getRate).orElse(-1.0),
@@ -182,24 +176,6 @@ public class SchoolController {
         }
         else {
             Optional<Iterable<Object>> data = schoolDataRepository.findSchoolDataByName(name, year);
-            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
-        }
-    }
-
-    /**
-     * Calculates the school's graduation rate and its percentile
-     * @param name The name of the school
-     * @param year The year of data to get (leave blank to get all years)
-     * @return The graduation rate and its percentile
-     */
-    @GetMapping(path="/graduationRate")
-    public @ResponseBody ResponseEntity<RateWrapper> getSchoolGraduationRate(String name, Integer year) {
-        if (year == null) {
-            Optional<RateWrapper> data = schoolDataRepository.getGraduationRate(name);
-            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
-        }
-        else {
-            Optional<RateWrapper> data = schoolDataRepository.getGraduationRate(name, year);
             return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         }
     }

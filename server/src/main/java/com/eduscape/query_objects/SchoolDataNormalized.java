@@ -3,8 +3,6 @@ package com.eduscape.query_objects;
 public class SchoolDataNormalized {
 
     private final String name;
-    private final double graduationRate;
-    private final double graduationRatePercentile;
     private final double dropoutRate;
     private final double dropoutRatePercentile;
     private final double percentLowIncome;
@@ -20,10 +18,8 @@ public class SchoolDataNormalized {
     private final double avgTeacherExperience;
     private final double avgTeacherExperiencePercentile;
 
-    public SchoolDataNormalized(String name, double graduationRate, double graduationRatePercentile, double dropoutRate, double dropoutRatePercentile, double perentLowIncome, double perentLowIncomePercentile, double collegeBound, double collegeBoundPercentile, double spendingPerStudent, double spendingPerPercentile, double facultyToStudentRatio, double facultyToStudentRatioPercentile, double avgTeacherExperienceLevel, double avgTeacherExperiencePercentile, double avgTeacherEducationLevel, double avgTeacherEducationLevelPercentile) {
+    public SchoolDataNormalized(String name, double dropoutRate, double dropoutRatePercentile, double perentLowIncome, double perentLowIncomePercentile, double collegeBound, double collegeBoundPercentile, double spendingPerStudent, double spendingPerPercentile, double facultyToStudentRatio, double facultyToStudentRatioPercentile, double avgTeacherExperienceLevel, double avgTeacherExperiencePercentile, double avgTeacherEducationLevel, double avgTeacherEducationLevelPercentile) {
         this.name = name;
-        this.graduationRate = graduationRate;
-        this.graduationRatePercentile = graduationRatePercentile;
         this.dropoutRate = dropoutRate;
         this.dropoutRatePercentile = dropoutRatePercentile;
         this.percentLowIncome = perentLowIncome;
@@ -42,14 +38,6 @@ public class SchoolDataNormalized {
 
     public String getName() {
         return name;
-    }
-
-    public double getGraduationRate() {
-        return graduationRate;
-    }
-
-    public double getGraduationRatePercentile() {
-        return graduationRatePercentile;
     }
 
     public double getDropoutRate() {
