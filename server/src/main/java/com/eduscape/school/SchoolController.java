@@ -1,6 +1,7 @@
 package com.eduscape.school;
 
 import com.eduscape.keystone.KeystoneRepository;
+import com.eduscape.query_objects.OverallScoreWrapper;
 import com.eduscape.query_objects.RateWrapper;
 import com.eduscape.query_objects.SchoolDataNormalized;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -324,6 +325,24 @@ public class SchoolController {
         }
         else {
             Optional<RateWrapper> data = schoolDataRepository.getAverageTeacherSalary(name, year);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+    }
+
+    /**
+     * Calculates the school's overall score based on Keystone data
+     * @param name The name of the school
+     * @param year The year of data to get (leave blank to get all years)
+     * @return The overall score [0,100]
+     */
+    @GetMapping(path="/overallScore")
+    public @ResponseBody ResponseEntity<OverallScoreWrapper> getSchoolOverallScore(String name, Integer year) {
+        if (year == null) {
+            Optional<OverallScoreWrapper> data = keystoneRepository.getSchoolOverallScore(name);
+            return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        }
+        else {
+            Optional<OverallScoreWrapper> data = keystoneRepository.getSchoolOverallScore(name, year);
             return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         }
     }

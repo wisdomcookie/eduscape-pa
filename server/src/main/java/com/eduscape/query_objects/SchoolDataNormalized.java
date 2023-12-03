@@ -20,12 +20,12 @@ public class SchoolDataNormalized {
     private final double avgTeacherSalary;
     private final double avgTeacherSalaryPercentile;
 
-    public SchoolDataNormalized(String name, double dropoutRate, double dropoutRatePercentile, double perentLowIncome, double perentLowIncomePercentile, double collegeBound, double collegeBoundPercentile, double spendingPerStudent, double spendingPerPercentile, double facultyToStudentRatio, double facultyToStudentRatioPercentile, double avgTeacherExperienceLevel, double avgTeacherExperiencePercentile, double avgTeacherEducationLevel, double avgTeacherEducationLevelPercentile, double avgTeacherSalary, double avgTeacherSalaryPercentile) {
+    public SchoolDataNormalized(String name, double dropoutRate, double dropoutRatePercentile, double percentLowIncome, double percentLowIncomePercentile, double collegeBound, double collegeBoundPercentile, double spendingPerStudent, double spendingPerPercentile, double facultyToStudentRatio, double facultyToStudentRatioPercentile, double avgTeacherExperienceLevel, double avgTeacherExperiencePercentile, double avgTeacherEducationLevel, double avgTeacherEducationLevelPercentile, double avgTeacherSalary, double avgTeacherSalaryPercentile) {
         this.name = name;
         this.dropoutRate = dropoutRate;
         this.dropoutRatePercentile = dropoutRatePercentile;
-        this.percentLowIncome = perentLowIncome;
-        this.percentLowIncomePercentile = perentLowIncomePercentile;
+        this.percentLowIncome = percentLowIncome;
+        this.percentLowIncomePercentile = percentLowIncomePercentile;
         this.collegeBound = collegeBound;
         this.collegeBoundPercentile = collegeBoundPercentile;
         this.spendingPerStudent = spendingPerStudent;
