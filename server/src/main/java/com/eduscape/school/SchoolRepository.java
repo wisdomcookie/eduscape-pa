@@ -1,6 +1,5 @@
 package com.eduscape.school;
 
-import com.eduscape.query_objects.RateWrapper;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
