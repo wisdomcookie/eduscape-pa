@@ -4,13 +4,19 @@ import com.eduscape.keystone.KeystoneRepository;
 import com.eduscape.query_objects.OverallScoreWrapper;
 import com.eduscape.query_objects.RateWrapper;
 import com.eduscape.query_objects.SchoolDataNormalized;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path="/schools")
@@ -24,6 +30,9 @@ public class SchoolController {
 
     @Autowired
     private KeystoneRepository keystoneRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @GetMapping(path="/all")
     public @ResponseBody ResponseEntity<Iterable<School>> getAll() {
@@ -114,15 +123,82 @@ public class SchoolController {
     /**
      * Gets n schools based on the provided ordering scheme
      * @param n The number of schools to get
-     * @param orderByClause The ordering of the ORDER BY clause
+     * @param order Sort by ascending or descending
+     * @param type The percentile value to sort by
      * @param year The year of data to get (leave blank to get all years)
      * @return The top n schools ordered
      */
     @GetMapping(path="/ranking")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTopSchools(Integer n, String orderByClause, Integer year) {
-        Iterable<String> names = year != null ?
-                schoolDataRepository.getOrderedSchoolNames(n, year, orderByClause) :
-                schoolDataRepository.getOrderedSchoolNames(n, orderByClause);
+    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTopSchools(Integer n, String order, String type, Integer year) {
+        if (n == null || order == null || type == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        Iterable<String> names = null;
+
+        if (order.equalsIgnoreCase("ASC")) {
+            switch (type) {
+                case "dropoutRate" -> {
+                    names = schoolDataRepository.getT1Top(n);
+                }
+                case "percentLowIncome" -> {
+                    names = schoolDataRepository.getT2Top(n);
+                }
+                case "collegeBound" -> {
+                    names = schoolDataRepository.getT3Top(n);
+                }
+                case "spendingPerStudent" -> {
+                    names = schoolDataRepository.getT4Top(n);
+                }
+                case "facultyToStudentRatio" -> {
+                    names = schoolDataRepository.getT5Top(n);
+                }
+                case "avgTeacherExperience" -> {
+                    names = schoolDataRepository.getT6Top(n);
+                }
+                case "avgTeacherDegreeLevel" -> {
+                    names = schoolDataRepository.getT7Top(n);
+                }
+                case "avgTeacherSalary" -> {
+                    names = schoolDataRepository.getT8Top(n);
+                }
+            }
+        }
+        else if (order.equalsIgnoreCase("DESC")) {
+            switch (type) {
+                case "dropoutRate" -> {
+                    names = schoolDataRepository.getT1Bottom(n);
+                }
+                case "percentLowIncome" -> {
+                    names = schoolDataRepository.getT2Bottom(n);
+                }
+                case "collegeBound" -> {
+                    names = schoolDataRepository.getT3Bottom(n);
+                }
+                case "spendingPerStudent" -> {
+                    names = schoolDataRepository.getT4Bottom(n);
+                }
+                case "facultyToStudentRatio" -> {
+                    names = schoolDataRepository.getT5Bottom(n);
+                }
+                case "avgTeacherExperience" -> {
+                    names = schoolDataRepository.getT6Bottom(n);
+                }
+                case "avgTeacherDegreeLevel" -> {
+                    names = schoolDataRepository.getT7Bottom(n);
+                }
+                case "avgTeacherSalary" -> {
+                    names = schoolDataRepository.getT8Bottom(n);
+                }
+            }
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        if (names == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
         List<SchoolDataNormalized> schoolData = new ArrayList<>();
         for (String name : names) {

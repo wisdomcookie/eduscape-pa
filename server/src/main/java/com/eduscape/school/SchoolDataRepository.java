@@ -20,19 +20,6 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
     Optional<Iterable<Object>> findSchoolDataByName(@Param("name") String name, @Param("year") Integer year);
 
 
-    @Query(nativeQuery = true, value = "SELECT s.name " +
-            "FROM school s NATURAL JOIN district d " +
-            "ORDER BY ?2 " +
-            "LIMIT ?1")
-    Iterable<String> getOrderedSchoolNames(@Param("n") Integer n, @Param("orderByClause") String orderByClause);
-
-    //TODO
-    @Query(nativeQuery = true, value = "SELECT s.name " +
-            "FROM school s NATURAL JOIN district d " +
-            "ORDER BY ?1")
-    Iterable<String> getOrderedSchoolNames(@Param("n") Integer n, @Param("year") Integer year, @Param("orderByClause") String orderByClause);
-
-
     @Query(nativeQuery = true, value = "SELECT s.school_number, name, AVG(dropout_count/total_enrollment) rate, s.dropout_percentile 'percent_rank' " +
             "FROM school s JOIN school_data sd on s.school_number = sd.school_number " +
             "WHERE dropout_count>=0 AND name=?1")
@@ -119,4 +106,101 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
             "FROM school s JOIN district d ON s.aun = d.aun JOIN district_data dd ON d.aun = dd.aun " +
             "WHERE average_salary>0 AND s.name=?1 AND year=?2")
     Optional<RateWrapper> getAverageTeacherSalary(@Param("name") String name, @Param("year") Integer year);
+
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY CASE WHEN dropout_percentile = -1 THEN 1 ELSE dropout_percentile END, name " +
+            "LIMIT ?1")
+    Iterable<String> getT1Top(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY dropout_percentile DESC, name " +
+            "LIMIT ?1")
+    Iterable<String> getT1Bottom(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY CASE WHEN low_income_percentile = -1 THEN 1 ELSE low_income_percentile END, name " +
+            "LIMIT ?1")
+    Iterable<String> getT2Top(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY low_income_percentile DESC, name " +
+            "LIMIT ?1")
+    Iterable<String> getT2Bottom(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY CASE WHEN college_bound_percentile = -1 THEN 1 ELSE college_bound_percentile END, name " +
+            "LIMIT ?1")
+    Iterable<String> getT3Top(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY college_bound_percentile DESC, name " +
+            "LIMIT ?1")
+    Iterable<String> getT3Bottom(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY CASE WHEN spending_per_student_percentile = -1 THEN 1 ELSE spending_per_student_percentile END, name " +
+            "LIMIT ?1")
+    Iterable<String> getT4Top(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY spending_per_student_percentile DESC, name " +
+            "LIMIT ?1")
+    Iterable<String> getT4Bottom(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY CASE WHEN student_to_faculty_ratio_percentile = -1 THEN 1 ELSE student_to_faculty_ratio_percentile END, name " +
+            "LIMIT ?1")
+    Iterable<String> getT5Top(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY student_to_faculty_ratio_percentile DESC, name " +
+            "LIMIT ?1")
+    Iterable<String> getT5Bottom(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY CASE WHEN average_degree_percentile = -1 THEN 1 ELSE average_degree_percentile END, name " +
+            "LIMIT ?1")
+    Iterable<String> getT6Top(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY average_degree_percentile DESC, name " +
+            "LIMIT ?1")
+    Iterable<String> getT6Bottom(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY CASE WHEN average_experience_percentile = -1 THEN 1 ELSE average_experience_percentile END, name " +
+            "LIMIT ?1")
+    Iterable<String> getT7Top(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY average_experience_percentile DESC, name " +
+            "LIMIT ?1")
+    Iterable<String> getT7Bottom(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY CASE WHEN average_salary_percentile = -1 THEN 1 ELSE average_salary_percentile END, name " +
+            "LIMIT ?1")
+    Iterable<String> getT8Top(@Param("n") Integer n);
+
+    @Query(nativeQuery = true, value = "SELECT s.name " +
+            "FROM school s NATURAL JOIN district d " +
+            "ORDER BY average_salary_percentile DESC, name " +
+            "LIMIT ?1")
+    Iterable<String> getT8Bottom(@Param("n") Integer n);
 }
