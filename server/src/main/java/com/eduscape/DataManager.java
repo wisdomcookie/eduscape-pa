@@ -72,7 +72,7 @@ public class DataManager {
                 String name = arr[1];
                 String county = arr[2];
 
-                list.add(new District(districtId, name, county));
+                list.add(new District(districtId, name, county, -1, -1, -1, -1, -1));
             }
             districtRepository.saveAll(list);
             br.close();
@@ -96,7 +96,7 @@ public class DataManager {
                 int districtId = Integer.parseInt(arr[1]);
                 String name = arr[2];
 
-                list.add(new School(schoolId, districtId, name));
+                list.add(new School(schoolId, districtId, name, -1, -1, -1));
             }
             schoolRepository.saveAll(list);
             br.close();
@@ -137,8 +137,8 @@ public class DataManager {
                         experience,
                         salary,
                         degree,
-                        enrollment
-                ));
+                        enrollment,
+                        -1, -1, -1, -1, -1));
             }
             districtDataRepository.saveAll(list);
             br.close();
@@ -178,8 +178,8 @@ public class DataManager {
                         graduate_count,
                         college_bound,
                         total_enrollment,
-                        low_income_enrollment
-                ));
+                        low_income_enrollment,
+                        -1, -1, -1));
             }
             schoolDataRepository.saveAll(list);
             br.close();
