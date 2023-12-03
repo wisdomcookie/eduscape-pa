@@ -9,10 +9,17 @@ const PercentileCircle: React.FC<PercentileCircleProps> = ({ percentile }) => {
     return start + t * (end - start);
   };
 
-  const red = Math.round(lerp(255, 150, percentile / 100));
-  const green = Math.round(lerp(183, 214, percentile / 100)); // Adjusted green value to be brighter
-  const blue = Math.round(lerp(183, 145, percentile / 100));
+  var red = Math.round(lerp(255, 150, 1-percentile / 100));
+  var green = Math.round(lerp(183, 214, 1-percentile / 100)); // Adjusted green value to be brighter
+  var blue = Math.round(lerp(183, 145, 1-percentile / 100));
   
+  if (percentile == null || percentile < -1){
+//rgb(255, 152, 221)
+    red = 255
+    green = 152
+    blue = 221
+
+  }
   const formatNumber = (number?: number) => {
     if (number !== undefined) {
       const formattedNumber = Math.abs(number) >= 100 ? 99 : Math.abs(number); // Cap the number at 99

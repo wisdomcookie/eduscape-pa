@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
 import OverviewBudget from './StatCard';
 import PieChartCard from './PieChartCard';
@@ -8,7 +8,6 @@ import ExtraInfo from './ExtraStatsSlides';
 import { Options } from './ComparisonScreen';
 import Link from 'next/link';
 import router from 'next/router';
-
 
 
 export interface SchoolInfo {
@@ -42,6 +41,7 @@ interface SchoolCardProps {
 
 const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options }) => {
   const [showStats, setShowStats] = useState(false);
+  const [overallScore, setOverallScore] = useState<number>(-1);
 
   const handleShowStats = () => {
     setShowStats(prevShowStats => !prevShowStats);
@@ -53,10 +53,47 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options }) => {
     router.push(`/school/${schoolNameParam}`);
   };
   
-  
+  useEffect(() => {
+    const fetchOverallScore = async () => {
+      try {
+        console.log('Fetching school names...');
+        const response = await fetch(`http://localhost:8080/schools/overallScore?name=` + schoolInfo.name);
+        console.log(response)
+        if (response.ok) {
+          
+          const data = await response.json();
+
+          const roundedScore = Math.round(data?.overall_score_average);
+          setOverallScore(roundedScore);
+        }
+        else{
+          console.log(response.headers)
+
+        }
+      } catch (error) {
+        console.error('Error fetching school names:', error);
+      }
+    };
+
+    fetchOverallScore();
+    
+  }, []);
+
+  // Outside the component
+const getOverallScoreAverage = (jsonString: string | undefined): string => {
+  try {
+    const parsedData = jsonString ? JSON.parse(jsonString) : null;
+    const average = parsedData?.overall_score_average;
+    return average !== undefined ? average.toFixed(2) : 'N/A';
+  } catch (error) {
+    console.error('Error parsing JSON:', error);
+    return 'N/A';
+  }
+};
+
   
 
- 
+  //overallScore?name=
     const cardStyle: React.CSSProperties = {
         backgroundColor: '#FFFADD',
         color: '#233d4dff',
@@ -107,17 +144,19 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options }) => {
       const labelStyle = {
         fontWeight: 'bold',
       };
+      
     
       return (
         <div className="card" style={cardStyle}>
           <h1 style={{ fontSize: '2em', fontWeight: 'bold', minHeight: '110px' }}>{schoolInfo.name}</h1>
           <div style={{ marginTop: '20px' }}>
         <div style={{ fontSize: '1.2em', fontWeight: 'bold' }}>
-          Overall Rating:
+          Overall Rating: 
         </div>
         <div style={{ backgroundColor: '#ECECEC', borderRadius: '10px', padding: '20px', display: 'inline-block', }}>
   <div style={{ fontSize: '6em', fontWeight: 'bold', color: '#233d4dff', textAlign: 'center' }}>
-    {schoolInfo.overall_rating}
+  {overallScore != -1 && <p>{overallScore}</p> }
+  {overallScore == -1 && <p>#</p> }
   </div>
 </div>
 
