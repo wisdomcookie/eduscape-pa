@@ -111,57 +111,22 @@ public class SchoolController {
                 teacherSalary.map(RateWrapper::getPercent_Rank).orElse(-1.0));
     }
 
-    @GetMapping(path="/top25")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTop25(Integer year, String orderByClause) {
-        return getTopSchools(25, year, orderByClause);
-    }
-
-    @GetMapping(path="/bottom25")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getBottom25(Integer year, String orderByClause) {
-        return getBottomSchools(25, year, orderByClause);
-    }
-
     /**
-     * Gets the top n schools based on the provided ordering scheme
+     * Gets n schools based on the provided ordering scheme
      * @param n The number of schools to get
-     * @param year The year of data to get (leave blank to get all years)
      * @param orderByClause The ordering of the ORDER BY clause
+     * @param year The year of data to get (leave blank to get all years)
      * @return The top n schools ordered
      */
-    @GetMapping(path="/top")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTopSchools(int n, Integer year, String orderByClause) {
-        List<School> schools = new ArrayList<>();
-        for (School s : schoolRepository.findAll()) {
-            schools.add(s);
-        }
-        schools.sort(Comparator.comparing(School::getName));
+    @GetMapping(path="/ranking")
+    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getTopSchools(Integer n, String orderByClause, Integer year) {
+        Iterable<String> names = year != null ?
+                schoolDataRepository.getOrderedSchoolNames(n, year, orderByClause) :
+                schoolDataRepository.getOrderedSchoolNames(n, orderByClause);
 
         List<SchoolDataNormalized> schoolData = new ArrayList<>();
-        for (int i = 0; i < Math.min(schools.size(), n); i++) {
-            schoolData.add(year != null ? getData(schools.get(i).getName(), year) : getData(schools.get(i).getName()));
-        }
-
-        return new ResponseEntity<>(schoolData, HttpStatus.OK);
-    }
-
-    /**
-     * Gets the bottom n schools based on the provided ordering scheme
-     * @param n The number of schools to get
-     * @param year The year of data to get (leave blank to get all years)
-     * @param orderByClause The ordering of the ORDER BY clause
-     * @return The bottom n schools ordered
-     */
-    @GetMapping(path="/bottom")
-    public @ResponseBody ResponseEntity<Iterable<SchoolDataNormalized>> getBottomSchools(int n, Integer year, String orderByClause) {
-        List<School> schools = new ArrayList<>();
-        for (School s : schoolRepository.findAll()) {
-            schools.add(s);
-        }
-        schools.sort(Comparator.comparing(School::getName));
-
-        List<SchoolDataNormalized> schoolData = new ArrayList<>();
-        for (int i = schools.size()-1; i >= Math.max(schools.size() - n, 0); i--) {
-            schoolData.add(year != null ? getData(schools.get(i).getName(), year) : getData(schools.get(i).getName()));
+        for (String name : names) {
+            schoolData.add(year != null ? getData(name, year) : getData(name));
         }
 
         return new ResponseEntity<>(schoolData, HttpStatus.OK);
