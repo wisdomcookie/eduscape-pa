@@ -28,15 +28,6 @@ public class School {
     @Column(name = "low_income_percentile", columnDefinition = "FLOAT DEFAULT -1.0")
     private float lowIncomePercentile;
 
-    public School(int id, int districtID, String name) {
-        this.id = id;
-        this.districtID = districtID;
-        this.name = name;
-        collegeBoundPercentile = -1;
-        dropoutPercentile = -1;
-        lowIncomePercentile = -1;
-    }
-
     public School(int id, int districtID, String name, float collegeBoundPercentile, float dropoutPercentile, float lowIncomePercentile) {
         this.id = id;
         this.districtID = districtID;

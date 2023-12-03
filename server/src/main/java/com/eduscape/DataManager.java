@@ -72,7 +72,7 @@ public class DataManager {
                 String name = arr[1];
                 String county = arr[2];
 
-                list.add(new District(districtId, name, county));
+                list.add(new District(districtId, name, county, -1, -1, -1, -1, -1));
             }
             districtRepository.saveAll(list);
             br.close();
@@ -137,8 +137,8 @@ public class DataManager {
                         experience,
                         salary,
                         degree,
-                        enrollment
-                ));
+                        enrollment,
+                        -1, -1, -1, -1, -1));
             }
             districtDataRepository.saveAll(list);
             br.close();
