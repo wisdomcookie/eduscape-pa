@@ -21,13 +21,14 @@ const buttonStyle = {
 
 const RankedSchoolList: React.FC = () => {
   const [sortedItems, setSortedItems] = useState([
-        'name',
-        'graduationRate',
-        'dropoutRate',
-        'spendingPerStudent',
-        'facultyToStudentRatio',
-        'avgTeacherEducationLevel',
-        'overall_rating',
+        'dropoutRatePercentile',
+        'percentLowIncomePercentile',
+        'collegeBoundPercentile',
+        'spendingPerPercentile',
+        'facultyToStudentRatioPercentile',
+        'avgTeacherDegreeLevelPercentile',
+        'avgTeacherExperiencePercentile',
+        'avgTeacherSalaryPercentile'
   ]);
   const [schoolData, setSchoolData] = useState<SchoolInfo[]>([]);
   const [options, setOptions] = useState<Options>({
@@ -38,6 +39,7 @@ const RankedSchoolList: React.FC = () => {
     facultyToStudentRatio: true,
     avgTeacherExperience: true,
     avgTeacherDegreeLevel: true,
+    avgTeacherSalary: true
   });
 
   const handleOptionChange = (option: keyof Options) => {
@@ -49,8 +51,8 @@ const RankedSchoolList: React.FC = () => {
 
   const fetchSchoolData = async () => {
     try {
-      console.log('fetchSchoolData called');
-      const param = sortedItems.join(',');
+      const param = sortedItems.map(item => `CASE WHEN ${item} = -1 THEN 1 ELSE ${item} END DESC`).join(', ');
+      console.log(param)
       const response = await fetch("http://localhost:8080/schools/top25?orderByClause=" + param);
 
       if (!response.ok) {
@@ -143,7 +145,15 @@ const RankedSchoolList: React.FC = () => {
           }
           label="Percent Low Income"
         />
-        
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.avgTeacherSalary}
+              onChange={() => handleOptionChange('avgTeacherSalary')}
+            />
+          }
+          label="Average Teacher Salary"
+        />
       </div>
         <div>
       <KeyRow></KeyRow>

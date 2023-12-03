@@ -10,6 +10,7 @@ interface GridWithPercentileCirclesProps {
   collegeBound?: number;
   lowIncome?: number;
   facultyDegree?: number;
+  avgTeacherSalary? : number;
 }
 
 const GridWithPercentileCircles: React.FC<GridWithPercentileCirclesProps> = ({
@@ -20,7 +21,8 @@ const GridWithPercentileCircles: React.FC<GridWithPercentileCirclesProps> = ({
   collegeBound,
   lowIncome,
   facultyDegree,
-  avgTeacherExperience
+  avgTeacherExperience,
+  avgTeacherSalary
 }) => {
   
   return (
@@ -34,6 +36,7 @@ const GridWithPercentileCircles: React.FC<GridWithPercentileCirclesProps> = ({
       {lowIncome !== undefined && <TitleWithPercentileCircle title="Percent Low Income" percentile={lowIncome} />}
       {facultyDegree !== undefined && <TitleWithPercentileCircle title="Avg Faculty Degree" percentile={facultyDegree} />}
       {avgTeacherExperience !== undefined && <TitleWithPercentileCircle title="Avg Faculty Experience" percentile={avgTeacherExperience} />}
+      { avgTeacherSalary !== undefined && <TitleWithPercentileCircle title="Avg Faculty Salary" percentile={avgTeacherSalary} />}
     </div>
   );
 };

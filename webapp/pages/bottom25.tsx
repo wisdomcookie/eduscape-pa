@@ -27,6 +27,7 @@ const Top25: React.FC = () => {
         <Bottom25SchoolList />
       </div>
     </DndProvider>
+   
   );
 };
 

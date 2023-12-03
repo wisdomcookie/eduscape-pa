@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SchoolCard, { SchoolInfo } from './SchoolCard'; // Import SchoolCard component and SchoolInfo type
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import SortableListContainer from './RankedList';
@@ -20,14 +20,15 @@ const buttonStyle = {
 
 const Bottom25SchoolList: React.FC = () => {
   const [sortedItems, setSortedItems] = useState([
-        'name',
-        'graduationRate',
-        'dropoutRate',
-        'spendingPerStudent',
-        'facultyToStudentRatio',
-        'avgTeacherEducationLevel',
-        'overall_rating',
-  ]);
+    'dropoutRatePercentile',
+    'percentLowIncomePercentile',
+    'collegeBoundPercentile',
+    'spendingPerPercentile',
+    'facultyToStudentRatioPercentile',
+    'avgTeacherDegreeLevelPercentile',
+    'avgTeacherExperiencePercentile',
+    'avgTeacherSalaryPercentile'
+]);
   const [schoolData, setSchoolData] = useState<SchoolInfo[]>([]);
   const [options, setOptions] = useState<Options>({
     dropoutRate: true,
@@ -37,6 +38,7 @@ const Bottom25SchoolList: React.FC = () => {
     facultyToStudentRatio: true,
     avgTeacherExperience: true,
     avgTeacherDegreeLevel: true,
+    avgTeacherSalary: true
   });
 
   const handleOptionChange = (option: keyof Options) => {
@@ -49,7 +51,8 @@ const Bottom25SchoolList: React.FC = () => {
   const fetchSchoolData = async () => {
     try {
         
-      const param = sortedItems.join(',');
+      const param =  sortedItems.map(item => `${item} DESC`).join(', ');
+      console.log(param)
       const response = await fetch("http://localhost:8080/schools/bottom25?orderByClause=" + param, );
 
       if (!response.ok) {
@@ -63,7 +66,9 @@ const Bottom25SchoolList: React.FC = () => {
     }
   };
 
-  fetchSchoolData()
+  useEffect(() => {
+    fetchSchoolData()
+  }, []);
 
   return (
     <div style={{ display: 'flex', height: '100vh', backgroundColor: '#F2E3DB', paddingBottom: '200px',overflow: 'auto' }}>
@@ -135,6 +140,15 @@ const Bottom25SchoolList: React.FC = () => {
             />
           }
           label="Percent Low Income"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.avgTeacherSalary}
+              onChange={() => handleOptionChange('avgTeacherSalary')}
+            />
+          }
+          label="Average Teacher Salary"
         />
         
       </div>

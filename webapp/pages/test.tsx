@@ -1,34 +1,50 @@
-
-import { PieChart } from 'react-minimal-pie-chart';
-import PieChartCard from './Components/PieChartCard';
-import SchoolCard from './Components/SchoolCard'
-import SchoolListComponent from './Components/ComparisonScreen';
+import React from 'react';
+import BarChart from './Components/BarChart';
 
 
+function test() {
+  const xAxisLabels = [
 
-const Home: React.FC = () => {
+    'Dropout Rate Percentile',
 
-    const chartContainerStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginBottom: '10px',
-      };
+    'Percent Low Income Percentile',
 
-  const exampleSchoolInfo = {
-    name: "Example School",
-    graduationRate: 85,
-    dropoutRate: 5,
-    spendingPerStudent: 10000,
-    facultyToStudentRatio: 10,
-    avgTeacherEducationLevel: "4",
-    percentile: 75
-  };
+    'College Bound Percentile',
+
+    'Spending Per Student Percentile',
+
+    'Faculty to Student Ratio Percentile',
+
+    'Avg Teacher Experience Percentile',
+
+    'Avg Teacher Degree Level Percentile',
+
+    'Avg Teacher Salary Percentile',
+  ];
+  
+  const yAxisTitle = 'Sales';
+
+  const datasets = [
+    {
+      label: 'School year A',
+      data: [50, 70, 65, 80, 90, 75, 80, 80],
+      borderColor: '#3e95cd',
+      backgroundColor: '#7bb6dd',
+    },
+    {
+      label: 'School year B',
+      data: [30, 45, 60, 70, 80, 95, 80, 80],
+      borderColor: '#3cba9f',
+      backgroundColor: '#71d1bd',
+    },
+    // Add more datasets as needed
+  ];
 
   return (
     <div>
-      <SchoolListComponent></SchoolListComponent>
+      <BarChart xAxisLabels={xAxisLabels} yAxisTitle={yAxisTitle} datasets={datasets} />
     </div>
   );
-};
+}
 
-export default Home;
+export default test;

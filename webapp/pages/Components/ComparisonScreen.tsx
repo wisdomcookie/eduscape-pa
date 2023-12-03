@@ -22,6 +22,7 @@ const buttonStyle = {
     facultyToStudentRatio: boolean;
     avgTeacherExperience: boolean;
     avgTeacherDegreeLevel: boolean;
+    avgTeacherSalary: boolean
   }
 
 const SchoolListComponent: React.FC = () => {
@@ -36,6 +37,7 @@ const SchoolListComponent: React.FC = () => {
     facultyToStudentRatio: true,
     avgTeacherExperience: true,
     avgTeacherDegreeLevel: true,
+    avgTeacherSalary: true,
   });
   const [schoolNames, setSchoolNames] = useState<string[]>([]);
 
@@ -107,7 +109,7 @@ const SchoolListComponent: React.FC = () => {
   
   
   return (
-    <div style={{ padding: '10px',height: 'fit-content', backgroundColor: '#F2E3DB' }}>
+    <div style={{ padding: '10px',height: 'fit-content', backgroundColor: '#F2E3DB', textAlign: 'center' }}>
       <Typography variant="h2" style={{ marginBottom: '16px',  }}>Search and Compare Schools</Typography>
       
       <div style={{ display: 'flex' }}>
@@ -194,6 +196,15 @@ const SchoolListComponent: React.FC = () => {
             />
           }
           label="Percent Low Income"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={options.avgTeacherSalary}
+              onChange={() => handleOptionChange('avgTeacherSalary')}
+            />
+          }
+          label="Average Teacher Salary"
         />
         
       </div>

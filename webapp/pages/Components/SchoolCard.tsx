@@ -6,6 +6,9 @@ import GridWithPercentileCircles from './GirdWithPercentiles';
 import { render } from 'react-dom';
 import ExtraInfo from './ExtraStatsSlides';
 import { Options } from './ComparisonScreen';
+import Link from 'next/link';
+import router from 'next/router';
+
 
 
 export interface SchoolInfo {
@@ -24,7 +27,9 @@ export interface SchoolInfo {
     avgTeacherExperiencePercentile: number;
     avgTeacherDegreeLevel: number;
     avgTeacherDegreeLevelPercentile: number;
-    
+    avgTeacherSalary: number;
+    avgTeacherSalaryPercentile: number;
+
     percentile: number;
     overall_rating: number;
      // Use strings for education level codes
@@ -42,6 +47,14 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options }) => {
     setShowStats(prevShowStats => !prevShowStats);
     render;
   };
+  
+  const navigateToSchoolPage = () => {
+    const schoolNameParam = encodeURIComponent(schoolInfo.name);
+    router.push(`/school/${schoolNameParam}`);
+  };
+  
+  
+  
 
  
     const cardStyle: React.CSSProperties = {
@@ -121,10 +134,17 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options }) => {
         collegeBound={options.collegeBound ? schoolInfo.collegeBoundPercentile : undefined}
         lowIncome={options.percentLowIncome ? schoolInfo.percentLowIncomePercentile : undefined}
         avgTeacherExperience={options.avgTeacherExperience ? schoolInfo.avgTeacherExperiencePercentile : undefined}
+        avgTeacherSalary={options.avgTeacherSalary ? schoolInfo.avgTeacherSalaryPercentile : undefined}
       />
 
 {showStats && (
+      <div>
         <ExtraInfo schoolInfo={schoolInfo}></ExtraInfo>
+        
+  <button style = {{padding: '15px 20px', width:'100%', borderRadius: '10px', fontSize: '36px', backgroundColor: '#8ECDDD', color: 'white', cursor: 'pointer', transition: 'background-color 0.3s'}}onClick={() => navigateToSchoolPage()}>More Stats</button>
+
+
+        </div>
       )}
 
 <div style = {{paddingTop: '10px'}}>
