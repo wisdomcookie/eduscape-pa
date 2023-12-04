@@ -132,7 +132,7 @@ const SchoolListComponent: React.FC = () => {
 
 
       {error && <div>{error}</div>}
-      <h1 style={{ fontSize: '2em', fontWeight: 'bold', }}>Visability Options</h1>
+      <h1 style={{ fontSize: '2em', fontWeight: 'bold', }}>Visibility Options</h1>
       <div style={{ marginTop: '20px' }}>
         <FormControlLabel
           control={

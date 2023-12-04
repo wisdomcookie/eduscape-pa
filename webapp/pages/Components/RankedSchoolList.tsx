@@ -80,7 +80,7 @@ const RankedSchoolList: React.FC = () => {
       <div style={{ padding: '10px', flex: 3, textAlign: 'center' }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400&display=swap" />
       <Typography variant="h2" style={{  fontFamily: 'Oleo Script, cursive', }}>Top 25</Typography>
-      <h1 style={{ fontSize: '2em', fontWeight: 'bold', }}>Visability Options</h1>
+      <h1 style={{ fontSize: '2em', fontWeight: 'bold', }}>Visibility Options</h1>
       <div style={{ marginTop: '20px' }}>
         <FormControlLabel
           control={
