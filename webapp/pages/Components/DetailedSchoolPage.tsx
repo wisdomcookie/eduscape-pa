@@ -143,15 +143,12 @@ const mappedYearlySchoolInfo = Array.from(yearlySchoolInfo.entries()).map(([year
 <h1 className="mx-auto mt-10 text-2xl font-semibold capitalize text-center">{`${schoolName}'s Percentiles over Time`}</h1>
 <BarChart xAxisLabels={xAxisLabels} yAxisTitle={"Percentiles"} datasets={mappedYearlySchoolInfo} />
 
-
-
-      <SchoolCard schoolInfo={schoolInfo} options={defaultOptions}></SchoolCard>
       <h1 className="mx-auto mt-10 mb-10 text-4xl font-semibold capitalize text-center">{`Yearly Data`}</h1>
       {Array.from(yearlySchoolInfo.entries())
         .map( ([year, info]) => (
           <>
             <h1 className="mx-auto mt-10 mb-10 text-4xl font-semibold capitalize text-center">{year}</h1>
-            <SchoolCard schoolInfo={info} options={defaultOptions}></SchoolCard>
+            <SchoolCard schoolInfo={info} options={defaultOptions} year={year}></SchoolCard>
           </>
         ))}
     </>

@@ -37,9 +37,10 @@ export interface SchoolInfo {
 interface SchoolCardProps {
   schoolInfo: SchoolInfo;
   options: Options;
+  year?: Number;
 }
 
-const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options }) => {
+const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options, year }) => {
   const [showStats, setShowStats] = useState(false);
   const [overallScore, setOverallScore] = useState<number>(-1);
 
@@ -57,7 +58,10 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ schoolInfo, options }) => {
     const fetchOverallScore = async () => {
       try {
         console.log('Fetching school names...');
-        const response = await fetch(`http://localhost:8080/schools/overallScore?name=` + schoolInfo.name);
+        const response = year 
+          ? await fetch(`http://localhost:8080/schools/overallScore?name=${schoolInfo.name}&year=${year}`)
+          : await fetch(`http://localhost:8080/schools/overallScore?name=${schoolInfo.name}`)
+
         console.log(response)
         if (response.ok) {
           
