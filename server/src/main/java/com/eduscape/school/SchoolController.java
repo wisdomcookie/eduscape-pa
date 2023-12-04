@@ -65,7 +65,7 @@ public class SchoolController {
         Optional<RateWrapper> lowIncomeData = schoolDataRepository.getPercentLowIncome(name);
         Optional<RateWrapper> collegeBoundData = schoolDataRepository.getCollegeBound(name);
         Optional<RateWrapper> spendingPerStudentData = schoolDataRepository.getSpendingPerStudent(name);
-        Optional<RateWrapper> studentFacultyRatioData = schoolDataRepository.getFacultyToStudentRatio(name);
+        Optional<RateWrapper> studentFacultyRatioData = schoolDataRepository.getStudentToFacultyRatio(name);
         Optional<RateWrapper> teacherDegreeLevel = schoolDataRepository.getTeacherDegreeLevel(name);
         Optional<RateWrapper> teacherExperience = schoolDataRepository.getTeacherExperience(name);
         Optional<RateWrapper> teacherSalary = schoolDataRepository.getAverageTeacherSalary(name);
@@ -95,7 +95,7 @@ public class SchoolController {
         Optional<RateWrapper> lowIncomeData = schoolDataRepository.getPercentLowIncome(name, year);
         Optional<RateWrapper> collegeBoundData = schoolDataRepository.getCollegeBound(name, year);
         Optional<RateWrapper> spendingPerStudentData = schoolDataRepository.getSpendingPerStudent(name, year);
-        Optional<RateWrapper> studentFacultyRatioData = schoolDataRepository.getFacultyToStudentRatio(name, year);
+        Optional<RateWrapper> studentFacultyRatioData = schoolDataRepository.getStudentToFacultyRatio(name, year);
         Optional<RateWrapper> teacherDegreeLevel = schoolDataRepository.getTeacherDegreeLevel(name, year);
         Optional<RateWrapper> teacherExperience = schoolDataRepository.getTeacherExperience(name, year);
         Optional<RateWrapper> teacherSalary = schoolDataRepository.getAverageTeacherSalary(name, year);
@@ -150,7 +150,7 @@ public class SchoolController {
                 case "spendingPerStudent" -> {
                     names = schoolDataRepository.getT4Top(n);
                 }
-                case "facultyToStudentRatio" -> {
+                case "studentToFacultyRatio" -> {
                     names = schoolDataRepository.getT5Top(n);
                 }
                 case "avgTeacherExperience" -> {
@@ -178,7 +178,7 @@ public class SchoolController {
                 case "spendingPerStudent" -> {
                     names = schoolDataRepository.getT4Bottom(n);
                 }
-                case "facultyToStudentRatio" -> {
+                case "StudentToFacultyRatio" -> {
                     names = schoolDataRepository.getT5Bottom(n);
                 }
                 case "avgTeacherExperience" -> {
@@ -307,11 +307,11 @@ public class SchoolController {
     @GetMapping(path="/studentFacultyRatio")
     public @ResponseBody ResponseEntity<RateWrapper> getSchoolStudentToFacultyRatio(String name, Integer year) {
         if (year == null) {
-            Optional<RateWrapper> data = schoolDataRepository.getFacultyToStudentRatio(name);
+            Optional<RateWrapper> data = schoolDataRepository.getStudentToFacultyRatio(name);
             return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         }
         else {
-            Optional<RateWrapper> data = schoolDataRepository.getFacultyToStudentRatio(name, year);
+            Optional<RateWrapper> data = schoolDataRepository.getStudentToFacultyRatio(name, year);
             return data.map(objects -> new ResponseEntity<>(objects, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
         }
     }

@@ -20,8 +20,8 @@ export interface SchoolInfo {
     collegeBoundPercentile: number;
     spendingPerStudent: number;
     spendingPerPercentile: number;
-    facultyToStudentRatio: number;
-    facultyToStudentRatioPercentile: number;
+    studentToFacultyRatio: number;
+    studentToFacultyRatioPercentile: number;
     avgTeacherExperience: number;
     avgTeacherExperiencePercentile: number;
     avgTeacherDegreeLevel: number;
@@ -167,8 +167,9 @@ const getOverallScoreAverage = (jsonString: string | undefined): string => {
         </div>
       <div style={{paddingTop: '30px'}}></div>
       <GridWithPercentileCircles
+        dropoutRate={options.dropoutRate ? schoolInfo.dropoutRatePercentile : undefined}
         expendituresPerStudent={options.spendingPerStudent ? schoolInfo.spendingPerPercentile : undefined}
-        studentToFacultyRatio={options.facultyToStudentRatio ? schoolInfo.facultyToStudentRatioPercentile : undefined}
+        studentToFacultyRatio={options.studentToFacultyRatio ? schoolInfo.studentToFacultyRatioPercentile : undefined}
         avgTeacherEducationLevel={options.avgTeacherDegreeLevel ? schoolInfo.avgTeacherDegreeLevelPercentile : undefined}
         collegeBound={options.collegeBound ? schoolInfo.collegeBoundPercentile : undefined}
         lowIncome={options.percentLowIncome ? schoolInfo.percentLowIncomePercentile : undefined}

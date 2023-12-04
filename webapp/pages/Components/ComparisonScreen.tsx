@@ -19,7 +19,7 @@ const buttonStyle = {
     percentLowIncome: boolean;
     collegeBound: boolean;
     spendingPerStudent: boolean;
-    facultyToStudentRatio: boolean;
+    studentToFacultyRatio: boolean;
     avgTeacherExperience: boolean;
     avgTeacherDegreeLevel: boolean;
     avgTeacherSalary: boolean
@@ -34,7 +34,7 @@ const SchoolListComponent: React.FC = () => {
     percentLowIncome: true,
     collegeBound: true,
     spendingPerStudent: true,
-    facultyToStudentRatio: true,
+    studentToFacultyRatio: true,
     avgTeacherExperience: true,
     avgTeacherDegreeLevel: true,
     avgTeacherSalary: true,
@@ -155,11 +155,11 @@ const SchoolListComponent: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={options.facultyToStudentRatio}
-              onChange={() => handleOptionChange('facultyToStudentRatio')}
+              checked={options.studentToFacultyRatio}
+              onChange={() => handleOptionChange('studentToFacultyRatio')}
             />
           }
-          label="Faculty to Student Ratio"
+          label="Student To Faculty Ratio"
         />
         <FormControlLabel
           control={

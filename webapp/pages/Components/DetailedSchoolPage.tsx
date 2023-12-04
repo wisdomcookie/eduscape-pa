@@ -15,8 +15,8 @@ const exampleSchoolInfo: SchoolInfo = {
   collegeBoundPercentile: 30,
   spendingPerStudent: 10000,
   spendingPerPercentile: 50,
-  facultyToStudentRatio: 10,
-  facultyToStudentRatioPercentile: 20,
+  studentToFacultyRatio: 10,
+  studentToFacultyRatioPercentile: 20,
   avgTeacherExperience: 6,
   avgTeacherExperiencePercentile: 90,
   avgTeacherDegreeLevel: 4,
@@ -32,7 +32,7 @@ const defaultOptions = {
     percentLowIncome: true,
     collegeBound: true,
     spendingPerStudent: true,
-    facultyToStudentRatio: true,
+    studentToFacultyRatio: true,
     avgTeacherExperience: true,
     avgTeacherDegreeLevel: true,
     avgTeacherSalary: true,
@@ -109,7 +109,7 @@ const mappedYearlySchoolInfo = Array.from(yearlySchoolInfo.entries()).map(([year
     Math.max(0, data.percentLowIncomePercentile * 100),
     Math.max(0, data.collegeBoundPercentile * 100),
     Math.max(0, data.spendingPerPercentile * 100),
-    Math.max(0, data.facultyToStudentRatioPercentile * 100),
+    Math.max(0, data.studentToFacultyRatioPercentile * 100),
     Math.max(0, data.avgTeacherExperiencePercentile * 100),
     Math.max(0, data.avgTeacherDegreeLevelPercentile * 100),
     Math.max(0, data.avgTeacherSalaryPercentile * 100),
@@ -129,7 +129,7 @@ const mappedYearlySchoolInfo = Array.from(yearlySchoolInfo.entries()).map(([year
   
       'Spending Per Student Percentile',
   
-      'Faculty to Student Ratio Percentile',
+      'Student To Faculty Ratio Percentile',
   
       'Avg Teacher Experience Percentile',
   

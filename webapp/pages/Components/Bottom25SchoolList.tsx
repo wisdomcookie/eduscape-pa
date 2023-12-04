@@ -24,7 +24,7 @@ const Bottom25SchoolList: React.FC = () => {
     'percentLowIncome',
     'collegeBound',
     'spendingPerStudent',
-    'facultyToStudentRatio',
+    'studentToFacultyRatio',
     'avgTeacherDegreeLevel',
     'avgTeacherExperience',
     'avgTeacherSalary'
@@ -35,7 +35,7 @@ const Bottom25SchoolList: React.FC = () => {
     percentLowIncome: true,
     collegeBound: true,
     spendingPerStudent: true,
-    facultyToStudentRatio: true,
+    studentToFacultyRatio: true,
     avgTeacherExperience: true,
     avgTeacherDegreeLevel: true,
     avgTeacherSalary: true
@@ -99,11 +99,11 @@ const Bottom25SchoolList: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={options.facultyToStudentRatio}
-              onChange={() => handleOptionChange('facultyToStudentRatio')}
+              checked={options.studentToFacultyRatio}
+              onChange={() => handleOptionChange('studentToFacultyRatio')}
             />
           }
-          label="Faculty to Student Ratio"
+          label="Student To Faculty Ratio"
         />
         <FormControlLabel
           control={

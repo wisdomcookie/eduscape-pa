@@ -11,8 +11,8 @@ public class SchoolDataNormalized {
     private final double collegeBoundPercentile;
     private final double spendingPerStudent;
     private final double spendingPerPercentile;
-    private final double facultyToStudentRatio;
-    private final double facultyToStudentRatioPercentile;
+    private final double studentToFacultyRatio;
+    private final double studentToFacultyRatioPercentile;
     private final double avgTeacherDegreeLevel;
     private final double avgTeacherDegreeLevelPercentile;
     private final double avgTeacherExperience;
@@ -20,7 +20,7 @@ public class SchoolDataNormalized {
     private final double avgTeacherSalary;
     private final double avgTeacherSalaryPercentile;
 
-    public SchoolDataNormalized(String name, double dropoutRate, double dropoutRatePercentile, double percentLowIncome, double percentLowIncomePercentile, double collegeBound, double collegeBoundPercentile, double spendingPerStudent, double spendingPerPercentile, double facultyToStudentRatio, double facultyToStudentRatioPercentile, double avgTeacherExperienceLevel, double avgTeacherExperiencePercentile, double avgTeacherEducationLevel, double avgTeacherEducationLevelPercentile, double avgTeacherSalary, double avgTeacherSalaryPercentile) {
+    public SchoolDataNormalized(String name, double dropoutRate, double dropoutRatePercentile, double percentLowIncome, double percentLowIncomePercentile, double collegeBound, double collegeBoundPercentile, double spendingPerStudent, double spendingPerPercentile, double studentToFacultyRatio, double studentToFacultyRatioPercentile, double avgTeacherExperienceLevel, double avgTeacherExperiencePercentile, double avgTeacherEducationLevel, double avgTeacherEducationLevelPercentile, double avgTeacherSalary, double avgTeacherSalaryPercentile) {
         this.name = name;
         this.dropoutRate = dropoutRate;
         this.dropoutRatePercentile = dropoutRatePercentile;
@@ -30,8 +30,8 @@ public class SchoolDataNormalized {
         this.collegeBoundPercentile = collegeBoundPercentile;
         this.spendingPerStudent = spendingPerStudent;
         this.spendingPerPercentile = spendingPerPercentile;
-        this.facultyToStudentRatio = facultyToStudentRatio;
-        this.facultyToStudentRatioPercentile = facultyToStudentRatioPercentile;
+        this.studentToFacultyRatio = studentToFacultyRatio;
+        this.studentToFacultyRatioPercentile = studentToFacultyRatioPercentile;
         this.avgTeacherDegreeLevel = avgTeacherExperienceLevel;
         this.avgTeacherDegreeLevelPercentile = avgTeacherExperiencePercentile;
         this.avgTeacherExperience = avgTeacherEducationLevel;
@@ -76,12 +76,12 @@ public class SchoolDataNormalized {
         return spendingPerPercentile;
     }
 
-    public double getFacultyToStudentRatio() {
-        return facultyToStudentRatio;
+    public double getStudentToFacultyRatio() {
+        return studentToFacultyRatio;
     }
 
-    public double getFacultyToStudentRatioPercentile() {
-        return facultyToStudentRatioPercentile;
+    public double getStudentToFacultyRatioPercentile() {
+        return studentToFacultyRatioPercentile;
     }
 
     public double getAvgTeacherDegreeLevel() {

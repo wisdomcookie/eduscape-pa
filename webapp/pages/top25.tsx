@@ -13,7 +13,7 @@ const Top25: React.FC = () => {
     graduationRate: 85,
     dropoutRate: 5,
     spendingPerStudent: 10000,
-    facultyToStudentRatio: 10,
+    studentToFacultyRatio: 10,
     avgTeacherEducationLevel: "4",
     percentile: 75,
     overall_rating: 10,

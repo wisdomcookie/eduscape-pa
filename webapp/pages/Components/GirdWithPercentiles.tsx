@@ -2,7 +2,7 @@ import React from 'react';
 import TitleWithPercentileCircle from './TitleWithPercentageCircle';
 
 interface GridWithPercentileCirclesProps {
-  graduationRate?: number;
+  dropoutRate?: number;
   expendituresPerStudent?: number;
   studentToFacultyRatio?: number;
   avgTeacherEducationLevel?: number;
@@ -14,7 +14,7 @@ interface GridWithPercentileCirclesProps {
 }
 
 const GridWithPercentileCircles: React.FC<GridWithPercentileCirclesProps> = ({
-  graduationRate,
+  dropoutRate,
   expendituresPerStudent,
   studentToFacultyRatio,
   avgTeacherEducationLevel,
@@ -27,7 +27,7 @@ const GridWithPercentileCircles: React.FC<GridWithPercentileCirclesProps> = ({
   
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {graduationRate !== undefined && <TitleWithPercentileCircle title="Graduation Rate" percentile={graduationRate} />}
+      {dropoutRate !== undefined && <TitleWithPercentileCircle title="Dropout Rate" percentile={dropoutRate} />}
       {expendituresPerStudent !== undefined && <TitleWithPercentileCircle title="Expenditures Per Student" percentile={expendituresPerStudent} />}
       {studentToFacultyRatio !== undefined && <TitleWithPercentileCircle title="Student to Faculty Ratio" percentile={studentToFacultyRatio} />}
       {avgTeacherEducationLevel !== undefined && <TitleWithPercentileCircle title="Avg Teacher Education Level" percentile={avgTeacherEducationLevel} />}

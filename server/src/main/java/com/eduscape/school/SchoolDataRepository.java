@@ -67,12 +67,12 @@ public interface SchoolDataRepository extends CrudRepository<SchoolData, Integer
     @Query(nativeQuery = true, value = "SELECT s.school_number, s.name, AVG(enrollment/professional_personnel) rate, d.student_to_faculty_ratio_percentile 'percent_rank' " +
             "FROM school s JOIN district d ON s.aun = d.aun JOIN district_data dd ON d.aun = dd.aun " +
             "WHERE professional_personnel>0 AND enrollment>0 AND s.name=?1")
-    Optional<RateWrapper> getFacultyToStudentRatio(@Param("name") String name);
+    Optional<RateWrapper> getStudentToFacultyRatio(@Param("name") String name);
 
     @Query(nativeQuery = true, value = "SELECT s.school_number, s.name, AVG(enrollment/professional_personnel) rate, dd.student_to_faculty_ratio_percentile 'percent_rank' " +
             "FROM school s JOIN district d ON s.aun = d.aun JOIN district_data dd ON d.aun = dd.aun " +
             "WHERE professional_personnel>0 AND enrollment>0 AND s.name=?1 AND year=?2")
-    Optional<RateWrapper> getFacultyToStudentRatio(@Param("name") String name, @Param("year") Integer year);
+    Optional<RateWrapper> getStudentToFacultyRatio(@Param("name") String name, @Param("year") Integer year);
 
 
     @Query(nativeQuery = true, value = "SELECT s.school_number, s.name, AVG(average_experience) rate, d.average_degree_percentile 'percent_rank' " +

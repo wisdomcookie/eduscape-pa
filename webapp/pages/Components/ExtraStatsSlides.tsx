@@ -67,7 +67,7 @@ const ExtraInfo: React.FC<SchoolCardProps> = ({ schoolInfo }) => {
         <div>
           <p><span style={labelStyle}>Average Teacher Degree Level:</span> {schoolInfo?.avgTeacherDegreeLevel !== null && schoolInfo?.avgTeacherDegreeLevel !== -1 ? getEducationLevelText(schoolInfo?.avgTeacherDegreeLevel) : 'unreported'}</p>
           <p><span style={labelStyle}>Average Teacher Experience:</span> {schoolInfo?.avgTeacherExperience !== null && schoolInfo?.avgTeacherExperience !== -1 ?  Math.round(schoolInfo.avgTeacherExperience)  : 'unreported'}</p>
-          <p><span style={labelStyle}>Faculty to Student Ratio:</span> {schoolInfo?.facultyToStudentRatio !== null && schoolInfo?.facultyToStudentRatio !== -1 ? Math.round(schoolInfo.facultyToStudentRatio) : 'unreported'}</p>
+          <p><span style={labelStyle}>Faculty to Student Ratio:</span> {schoolInfo?.studentToFacultyRatio !== null && schoolInfo?.studentToFacultyRatio !== -1 ? Math.round(schoolInfo.studentToFacultyRatio) : 'unreported'}</p>
         </div>
 
         <div>
