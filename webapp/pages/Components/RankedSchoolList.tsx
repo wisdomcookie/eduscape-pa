@@ -53,7 +53,7 @@ const RankedSchoolList: React.FC = () => {
     try {
       const param = sortedItems.map(item => `CASE WHEN ${item} = -1 THEN 1 ELSE ${item} END DESC`).join(', ');
       console.log(param)
-      const response = await fetch("http://localhost:8080/schools/top25?orderByClause=" + param);
+      const response = await fetch("http://localhost:8080/schools/ranking?n=25&orderByClause=" + param);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
