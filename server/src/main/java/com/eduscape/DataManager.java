@@ -266,9 +266,4 @@ public class DataManager {
         }
     }
 
-    @RequestMapping("/wai")
-    private ResponseEntity<String> printLocation() {
-        return new ResponseEntity<>(System.getProperty("user.dir") + "\n", HttpStatus.OK);
-    }
-
 }
