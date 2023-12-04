@@ -20,6 +20,7 @@ const buttonStyle = {
 
 
 const RankedSchoolList: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [sortedItems, setSortedItems] = useState([
         'dropoutRate',
         'percentLowIncome',
@@ -51,9 +52,10 @@ const RankedSchoolList: React.FC = () => {
 
   const fetchSchoolData = async () => {
     try {
+      setIsLoading(true);
       const param = sortedItems.map(item => `CASE WHEN ${item} = -1 THEN 1 ELSE ${item} END DESC`).join(', ');
       console.log(param)
-      const response = await fetch(`http://localhost:8080/schools/ranking?n=25&order=ASC&type=${sortedItems[0]}`);
+      const response = await fetch(`http://localhost:8080/schools/ranking?n=10&order=ASC&type=${sortedItems[0]}`);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -64,6 +66,8 @@ const RankedSchoolList: React.FC = () => {
       setSchoolData(data);
     } catch (error) {
       console.error('Error fetching school data:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,7 +83,7 @@ const RankedSchoolList: React.FC = () => {
 
       <div style={{ padding: '10px', flex: 3, textAlign: 'center' }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400&display=swap" />
-      <Typography variant="h2" style={{  fontFamily: 'Oleo Script, cursive', }}>Top 25</Typography>
+      <Typography variant="h2" style={{  fontFamily: 'Oleo Script, cursive', }}>Top 10</Typography>
       <h1 style={{ fontSize: '2em', fontWeight: 'bold', }}>Visibility Options</h1>
       <div style={{ marginTop: '20px' }}>
         <FormControlLabel
@@ -158,11 +162,17 @@ const RankedSchoolList: React.FC = () => {
         <div>
       <KeyRow></KeyRow>
       </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
-        {schoolData.map((school, index) => (
-          <SchoolCard key={index} schoolInfo={school} options={options} />
-        ))}
-      </div>
+        {isLoading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '24px', marginTop: '20px' }}>
+            Loading...
+          </div>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
+          {schoolData.map((school, index) => (
+            <SchoolCard key={index} schoolInfo={school} options={options} />
+          ))}  
+          </div>)
+        } 
       </div>
 
       {/* Right side */}

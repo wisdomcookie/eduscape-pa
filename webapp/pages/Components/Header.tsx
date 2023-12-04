@@ -12,11 +12,11 @@ const Header: React.FC = () => {
       </div>
       <div className="buttons" style={{ display: 'flex', alignItems: 'center', gap: '20px',  marginLeft: 'auto', paddingLeft: '100px' }}>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400&display=swap" />
-        <Link href="../top25" style={{ textDecoration: 'none' }}>
-          <button className="button" style={{ fontSize: '26px', color: '#96D691', fontFamily: 'Oleo Script, cursive' }}>Top 25</button>
+        <Link href="../top10" style={{ textDecoration: 'none' }}>
+          <button className="button" style={{ fontSize: '26px', color: '#96D691', fontFamily: 'Oleo Script, cursive' }}>Top 10</button>
         </Link>
-        <Link href="../bottom25" style={{ textDecoration: 'none' }}>
-          <button className="button" style={{ fontSize: '26px', color: '#96D691', fontFamily: 'Oleo Script, cursive' }}>Bottom 25</button>
+        <Link href="../bottom10" style={{ textDecoration: 'none' }}>
+          <button className="button" style={{ fontSize: '26px', color: '#96D691', fontFamily: 'Oleo Script, cursive' }}>Bottom 10</button>
         </Link>
         <Link href="../searchScreen" style={{ textDecoration: 'none' }}>
           <button className="button" style={{ fontSize: '26px', color: '#96D691', fontFamily: 'Oleo Script, cursive' }}>Search and Compare</button>

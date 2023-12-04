@@ -4,11 +4,11 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import RankedSchoolList from './Components/RankedSchoolList';
 import SchoolCard from './Components/SchoolCard'
 import Header from './Components/Header';
-import Bottom25SchoolList from './Components/Bottom25SchoolList';
+import Bottom10SchoolList from './Components/Bottom10SchoolList';
 
 
 
-const Top25: React.FC = () => {
+const Top10: React.FC = () => {
   const exampleSchoolInfo = {
     name: "Example School",
     graduationRate: 85,
@@ -24,11 +24,11 @@ const Top25: React.FC = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="Home" style={{backgroundColor: '#ffe9dd'}}>
         <Header></Header>
-        <Bottom25SchoolList />
+        <Bottom10SchoolList />
       </div>
     </DndProvider>
    
   );
 };
 
-export default Top25;
+export default Top10;

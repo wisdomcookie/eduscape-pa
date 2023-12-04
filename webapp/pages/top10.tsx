@@ -7,7 +7,7 @@ import Header from './Components/Header';
 
 
 
-const Top25: React.FC = () => {
+const Top10: React.FC = () => {
   const exampleSchoolInfo = {
     name: "Example School",
     graduationRate: 85,
@@ -29,4 +29,4 @@ const Top25: React.FC = () => {
   );
 };
 
-export default Top25;
+export default Top10;

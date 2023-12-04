@@ -196,7 +196,7 @@ const handleSortSchools = (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-const getTop25Schools = (req: NextApiRequest, res: NextApiResponse) => {
+const getTop10Schools = (req: NextApiRequest, res: NextApiResponse) => {
   const { sortedItems } = req.body;
 
   if (!sortedItems || !Array.isArray(sortedItems)) {
@@ -214,7 +214,7 @@ const getTop25Schools = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 
-const getBottom25Schools = (req: NextApiRequest, res: NextApiResponse) => {
+const getBottom10Schools = (req: NextApiRequest, res: NextApiResponse) => {
   const { sortedItems } = req.body;
 
   if (!sortedItems || !Array.isArray(sortedItems)) {
@@ -238,9 +238,9 @@ const getAllSchoolNames = (req: NextApiRequest, res: NextApiResponse) => {
 export default (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     if (req.query.top25) {
-      getTop25Schools(req, res);
+      getTop10Schools(req, res);
     } else if (req.query.bottom25) {
-      getBottom25Schools(req, res);
+      getBottom10Schools(req, res);
     }
    else if (req.query.allNames) {
       getAllSchoolNames(req, res);
@@ -249,9 +249,9 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
     }
   } else if (req.method === 'POST') {
     if (req.query.top25) {
-      getTop25Schools(req, res);
+      getTop10Schools(req, res);
     } else if (req.query.bottom25) {
-      getBottom25Schools(req, res);
+      getBottom10Schools(req, res);
     }
    else if (req.query.allNames) {
       getAllSchoolNames(req, res);

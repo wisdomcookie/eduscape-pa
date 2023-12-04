@@ -18,7 +18,9 @@ const buttonStyle = {
 
 
 
-const Bottom25SchoolList: React.FC = () => {
+const Bottom10SchoolList: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [sortedItems, setSortedItems] = useState([
     'dropoutRate',
     'percentLowIncome',
@@ -50,10 +52,10 @@ const Bottom25SchoolList: React.FC = () => {
 
   const fetchSchoolData = async () => {
     try {
-        
+      setIsLoading(true);
       const param =  sortedItems.map(item => `${item} DESC`).join(', ');
       console.log(param)
-      const response = await fetch(`http://localhost:8080/schools/ranking?n=25&order=DESC&type=${sortedItems[0]}`);
+      const response = await fetch(`http://localhost:8080/schools/ranking?n=10&order=DESC&type=${sortedItems[0]}`);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -63,6 +65,8 @@ const Bottom25SchoolList: React.FC = () => {
       setSchoolData(data);
     } catch (error) {
       console.error('Error fetching school data:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,7 +79,7 @@ const Bottom25SchoolList: React.FC = () => {
 
       <div style={{ padding: '10px', flex: 3, textAlign: 'center' }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400&display=swap" />
-      <Typography variant="h2" style={{ fontFamily: 'Oleo Script, cursive'  }}>Bottom 25</Typography>
+      <Typography variant="h2" style={{ fontFamily: 'Oleo Script, cursive'  }}>Bottom 10</Typography>
       <h1 style={{ fontSize: '2em', fontWeight: 'bold', }}>Visibility Options</h1>
         <div style={{ marginTop: '20px' }}>
         <FormControlLabel
@@ -155,11 +159,18 @@ const Bottom25SchoolList: React.FC = () => {
         <div>
       <KeyRow></KeyRow>
       </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
-        {schoolData.map((school, index) => (
-          <SchoolCard key={index} schoolInfo={school} options = {options} />
-        ))}
-      </div>
+        {isLoading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '24px', marginTop: '20px' }}>
+            Loading...
+          </div>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40%, 1fr))', gap: '20px', marginTop: '20px' }}>
+          {schoolData.map((school, index) => (
+            <SchoolCard key={index} schoolInfo={school} options = {options} />
+          ))}
+          </div>)
+        }
+      
       </div>
 
       {/* Right side */}
@@ -170,4 +181,4 @@ const Bottom25SchoolList: React.FC = () => {
   );
 };
 
-export default Bottom25SchoolList;
+export default Bottom10SchoolList;
