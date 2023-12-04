@@ -20,14 +20,14 @@ const buttonStyle = {
 
 const Bottom25SchoolList: React.FC = () => {
   const [sortedItems, setSortedItems] = useState([
-    'dropoutRatePercentile',
-    'percentLowIncomePercentile',
-    'collegeBoundPercentile',
-    'spendingPerPercentile',
-    'facultyToStudentRatioPercentile',
-    'avgTeacherDegreeLevelPercentile',
-    'avgTeacherExperiencePercentile',
-    'avgTeacherSalaryPercentile'
+    'dropoutRate',
+    'percentLowIncome',
+    'collegeBound',
+    'spendingPerStudent',
+    'facultyToStudentRatio',
+    'avgTeacherDegreeLevel',
+    'avgTeacherExperience',
+    'avgTeacherSalary'
 ]);
   const [schoolData, setSchoolData] = useState<SchoolInfo[]>([]);
   const [options, setOptions] = useState<Options>({
@@ -53,7 +53,7 @@ const Bottom25SchoolList: React.FC = () => {
         
       const param =  sortedItems.map(item => `${item} DESC`).join(', ');
       console.log(param)
-      const response = await fetch("http://localhost:8080/schools/bottom25?orderByClause=" + param, );
+      const response = await fetch(`http://localhost:8080/schools/ranking?n=25&order=DESC&type=${sortedItems[0]}`);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
